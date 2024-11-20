@@ -14,11 +14,17 @@ FLAGS = -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ \
 	nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,$\
 	signed-integer-overflow,undefined,unreachable,vla-bound,vptr
 
-a.exe: Differentiator.o main.o
-	$(CC) Differentiator.o main.o -o a.exe $(FLAGS)
+a.exe: Differentiator.o DiffDump.o DiffVerificator.o main.o
+	$(CC) Differentiator.o DiffDump.o DiffVerificator.o main.o -o a.exe $(FLAGS)
 
-Differentiator.o: Differentiator.cpp Differentiator.h
+Differentiator.o: Differentiator.cpp Differentiator.h DiffVerificator.h
 	$(CC) -c Differentiator.cpp -o Differentiator.o $(FLAGS)
 
-main.o: main.cpp Differentiator.h
+DiffDump.o: DiffDump.cpp Differentiator.h DiffDump.h DiffVerificator.h
+	$(CC) -c DiffDump.cpp -o DiffDump.o $(FLAGS)
+
+DiffVerificator.o: DiffVerificator.cpp DiffVerificator.h
+	$(CC) -c DiffVerificator.cpp -o DiffVerificator.o $(FLAGS)
+
+main.o: main.cpp Differentiator.h DiffVerificator.h DiffDump.h
 	$(CC) -c main.cpp -o main.o $(FLAGS)
