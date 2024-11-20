@@ -1,0 +1,22 @@
+start symbol = <(>
+value is not a num
+value = </>
+
+In NodeType value = 47
+type = 0
+end symbol = <(>
+start symbol = <(>
+value is not a num
+value = <(>
+
+In NodeType value = 40
+type = 1
+end symbol = <3>
+end symbol = <0>
+ERROR: unknown symbol " not a ( or )"
+ERROR: uncorrect file of base
+start symbol = <)>
+ERROR: uncorrect file of base
+end symbol = <(>
+ERROR: unknown symbol " not a ( or )"
+ERROR: uncorrect file of base
