@@ -50,4 +50,6 @@
 
     node_t* NewNode (size_t type, int value, node_t* left, node_t* right);
 
+    double Evaluate (node_t* node);
+
 #endif

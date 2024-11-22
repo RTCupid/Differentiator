@@ -27,19 +27,15 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
     if (symbol == '(')
     {
         int value = 0;
-        if (fscanf (base_file, "%d", &value))
+        if (!fscanf (base_file, "%d", &value))
         {
-            fprintf (expr->dbg_log_file, "value = <%d>\n", value);
-        }
-        else
-        {
-            char operation = '\0';
             fprintf (expr->dbg_log_file, "value is not a num\n");
 
-            fscanf (base_file, " %c", &operation);
-            value = operation;
-            fprintf (expr->dbg_log_file, "value = <%c>\n\n", value);
+            fscanf (base_file, " %c", (char*)&value);
+            fprintf (expr->dbg_log_file, "value = <%c>\n\n", (char)value);
         }
+        fprintf (expr->dbg_log_file, "value = <%c>\n\n", value);
+
         size_t type = NodeType (expr, value);
         fprintf (expr->dbg_log_file, "type = %lu\n", type);
 

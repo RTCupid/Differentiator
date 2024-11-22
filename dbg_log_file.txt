@@ -2,6 +2,8 @@ start symbol = <(>
 value is not a num
 value = </>
 
+value = </>
+
 In NodeType value = 47
 type = 0
 end symbol = <(>
@@ -9,17 +11,21 @@ start symbol = <(>
 value is not a num
 value = <%>
 
+value = <%>
+
 In NodeType value = 37
 type = 0
 end symbol = <(>
 start symbol = <(>
-value = <30>
+value = <>
+
 In NodeType value = 30
 type = 1
 end symbol = <)>
 return
 start symbol = <(>
-value = <50>
+value = <2>
+
 In NodeType value = 50
 type = 1
 end symbol = <)>
@@ -29,17 +35,22 @@ start symbol = <(>
 value is not a num
 value = <&>
 
+value = <&>
+
 In NodeType value = 38
 type = 0
 end symbol = <(>
 start symbol = <(>
-value = <12>
+value = <>
+
 In NodeType value = 12
 type = 1
 end symbol = <)>
 return
 start symbol = <(>
 value is not a num
+value = <x>
+
 value = <x>
 
 In NodeType value = 120
