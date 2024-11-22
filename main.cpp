@@ -12,18 +12,12 @@ int main ()
 {
     printf ("Start programm\n");
 
-    printf ("%% - plus\n& - minus");
+    printf ("%% - plus\n& - minus\n");
 
     tree_t expr = {};
     ExpressionCtor (&expr);
 
-    printf ("\nvalue DIV = %d\n\n", '/');
-    printf ("\nvalue ADD = %d\n\n", '+');
-
-    // expr.root = NewNode (OP, DIV, NewNode (OP, ADD, _NUM(30), _NUM(50)),
-    //                                       NewNode (OP, SUB, _NUM(12), _X));
-
-    MakeExpression (&expr, "Expression.txt");
+    printf ("Answer = %lf\n", Evaluate (expr.root));
 
     DifferentiatorGraphviz (&expr);
     ExpressionDtor (&expr);

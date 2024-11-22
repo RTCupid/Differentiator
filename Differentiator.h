@@ -8,6 +8,7 @@
         ERROR_SIZE_FILE,
         ERROR_CALLOC_BASE,
         ERROR_FOPEN_BASE,
+        ERROR_EVALUATE = -52,
     };
 
     enum types

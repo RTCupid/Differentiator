@@ -4,8 +4,9 @@
 #include "Differentiator.h"
 #include "DiffDump.h"
 #include "DiffVerificator.h"
+#include "ReadExpression.h"
 
-static GLOBALX = 0;
+static double GLOBALX = 0;
 
 errExpr_t ExpressionCtor (tree_t* expr)
 {
@@ -13,6 +14,8 @@ errExpr_t ExpressionCtor (tree_t* expr)
     VerifyOpenFile (expr->dbg_log_file, "AkinatorCtor");
 
     expr->crnt_node = NULL;
+
+    MakeExpression (expr, "Expression.txt");
 
     return EXPR_OK;
 }
@@ -27,19 +30,29 @@ double Evaluate (node_t* node)
     {
         switch (node->value)
         {
-            case ADD: return Evaluate (node->left) + Evaluate (node->right);
-
-            case SUB: return Evaluate (node->left) - Evaluate (node->right);
-
-            case MUL: return Evaluate (node->left) * Evaluate (node->right);
-
-            case DIV: return Evaluate (node->left) / Evaluate (node->right);
-
-            case EQU:
+            case ADD:
+            {
+                return Evaluate (node->left) + Evaluate (node->right);
+            }
+            case SUB:
+            {
+                return Evaluate (node->left) - Evaluate (node->right);
+            }
+            case MUL:
+            {
+                return Evaluate (node->left) * Evaluate (node->right);
+            }
+            case DIV:
+            {
+                return Evaluate (node->left) / Evaluate (node->right);
+            }
+            default:
+            {
+                printf ("ERROR: unknown operation %d = <%c>\n", node->value, node->value);
+            }
         }
     }
-
-
+    return ERROR_EVALUATE;
 }
 
 node_t* NewNode (size_t type, int value, node_t* left, node_t* right)
