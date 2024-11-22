@@ -20,8 +20,8 @@
     enum OP
     {
         EQU = '=',
-        ADD = '+',
-        SUB = '-',
+        ADD = '%',
+        SUB = '&',
         MUL = '*',
         DIV = '/',
     };

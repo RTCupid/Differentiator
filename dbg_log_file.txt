@@ -7,16 +7,44 @@ type = 0
 end symbol = <(>
 start symbol = <(>
 value is not a num
-value = <(>
+value = <%>
 
-In NodeType value = 40
-type = 1
-end symbol = <3>
-end symbol = <0>
-ERROR: unknown symbol " not a ( or )"
-ERROR: uncorrect file of base
-start symbol = <)>
-ERROR: uncorrect file of base
+In NodeType value = 37
+type = 0
 end symbol = <(>
-ERROR: unknown symbol " not a ( or )"
-ERROR: uncorrect file of base
+start symbol = <(>
+value = <30>
+In NodeType value = 30
+type = 1
+end symbol = <)>
+return
+start symbol = <(>
+value = <50>
+In NodeType value = 50
+type = 1
+end symbol = <)>
+return
+end symbol = <)>
+start symbol = <(>
+value is not a num
+value = <&>
+
+In NodeType value = 38
+type = 0
+end symbol = <(>
+start symbol = <(>
+value = <12>
+In NodeType value = 12
+type = 1
+end symbol = <)>
+return
+start symbol = <(>
+value is not a num
+value = <x>
+
+In NodeType value = 120
+type = 2
+end symbol = <)>
+return
+end symbol = <)>
+end symbol = <)>

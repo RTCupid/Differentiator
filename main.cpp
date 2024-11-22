@@ -12,6 +12,8 @@ int main ()
 {
     printf ("Start programm\n");
 
+    printf ("%% - plus\n& - minus");
+
     tree_t expr = {};
     ExpressionCtor (&expr);
 
