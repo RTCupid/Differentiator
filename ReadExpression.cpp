@@ -4,6 +4,7 @@
 #include "Differentiator.h"
 #include "DiffVerificator.h"
 #include "ReadExpression.h"
+#include "colors.h"
 
 errExpr_t MakeExpression (tree_t* expr, const char* namefile)
 {
@@ -34,7 +35,10 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
             fscanf (base_file, " %c", (char*)&value);
             fprintf (expr->dbg_log_file, "value = <%c>\n\n", (char)value);
         }
-        fprintf (expr->dbg_log_file, "value = <%c>\n\n", value);
+        else
+        {
+            fprintf (expr->dbg_log_file, "value = <%d>\n\n", value);
+        }
 
         size_t type = NodeType (expr, value);
         fprintf (expr->dbg_log_file, "type = %lu\n", type);

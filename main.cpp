@@ -4,13 +4,14 @@
 #include "DiffDump.h"
 #include "DiffVerificator.h"
 #include "ReadExpression.h"
+#include "colors.h"
 
 #define _NUM(val) NewNode(NUM, (val), NULL, NULL)
 #define _X        NewNode(VAR, 'X', NULL, NULL)
 
 int main ()
 {
-    printf ("Start programm\n");
+    printf (GRN "Start programm\n" RESET);
 
     printf ("%% - plus\n& - minus\n");
 

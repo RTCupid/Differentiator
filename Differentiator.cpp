@@ -46,10 +46,12 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
             fprintf (expr->tex_file, "\\frac{");
             fprintf (expr->dbg_log_file, "\\frac{");
 
+            /*...left...*/
             RecursiveWriteExpression (expr, node->left);
             fprintf (expr->tex_file, "}{");
             fprintf (expr->dbg_log_file, "}{");
 
+            /*...right...*/
             RecursiveWriteExpression (expr, node->right);
             fprintf (expr->tex_file, "}");
             fprintf (expr->dbg_log_file, "}");
