@@ -17,9 +17,12 @@ int main ()
     tree_t expr = {};
     ExpressionCtor (&expr);
 
-    printf ("Answer = %lf\n", Evaluate (expr.root));
+    printf ("Answer = %lf\n", Evaluate (expr.root->left));
 
     DifferentiatorGraphviz (&expr);
+
+    WriterTexExpression (&expr);
+
     ExpressionDtor (&expr);
     printf ("End Programm\n");
     return 0;

@@ -41,9 +41,14 @@
     node_t* crnt_node;
     FILE* log_file;
     FILE* dbg_log_file;
+    FILE* tex_file;
     } tree_t;
 
     errExpr_t ExpressionCtor (tree_t* expr);
+
+    void WriterTexExpression (tree_t* expr);
+
+    void RecursiveWriteExpression (tree_t* expr, node_t* node);
 
     void ExpressionDtor (tree_t* expr);
 
