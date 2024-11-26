@@ -1,54 +1,14 @@
 start symbol = <(>
-value is not a num
-value = </>
-
-In NodeType value = 47
-type = 0
-end symbol = <(>
+<>
+first symbol in func = <(>
 start symbol = <(>
-value is not a num
-value = <%>
-
-In NodeType value = 37
-type = 0
-end symbol = <(>
-start symbol = <(>
-value = <30>
-
+<30>
+first symbol in func = <)>
 In NodeType value = 30
-type = 1
-end symbol = <)>
-return
+In NodeType value = 0
+second symbol in func = <(>
 start symbol = <(>
-value = <50>
-
+<50>
+first symbol in func = <)>
 In NodeType value = 50
-type = 1
-end symbol = <)>
-return
-end symbol = <)>
-start symbol = <(>
-value is not a num
-value = <&>
-
-In NodeType value = 38
-type = 0
-end symbol = <(>
-start symbol = <(>
-value = <12>
-
-In NodeType value = 12
-type = 1
-end symbol = <)>
-return
-start symbol = <(>
-value is not a num
-value = <x>
-
-In NodeType value = 120
-type = 2
-end symbol = <)>
-return
-end symbol = <)>
-end symbol = <)>
-\frac{30%50}{12&x}
+0

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "Differentiator.h"
 #include "DiffVerificator.h"
@@ -21,16 +22,57 @@ errExpr_t MakeExpression (tree_t* expr, const char* namefile)
 
 node_t* RunExpression (tree_t* expr, FILE* base_file)
 {
-    char symbol = '\0';
-    fscanf (base_file, " %c", &symbol);
+    char bracket = '\0';
+    fscanf (base_file, " %c", &bracket);
+    fprintf (expr->dbg_log_file, "start symbol = <%c>\n", bracket);
 
-    if (symbol == '(' )
+    if (bracket == '(' )
     {
         char buffer[MAX_LEN_BUF] = {};
-        fscanf (base_file, " %[ ^()]", buffer);
+        fscanf (base_file, "%[^()]", buffer);
+        fprintf (expr->dbg_log_file, "<%s>\n", buffer);
 
-            size_t NodeType (tree_t* expr, int value);
-            node_t* node = NewNode (type, value , NULL, NULL);
+        /*---LEFT-ARGUMENT---*/
+        fscanf (base_file, " %c", &bracket);
+        fprintf (expr->dbg_log_file, "first symbol in func = <%c>\n", bracket);
+
+        node_t* new_left = NULL;
+        if (bracket == '(')
+        {
+            ungetc ('(', base_file);
+
+            new_left = RunExpression (expr, base_file);
+        }
+        else if (bracket == ')')
+        {
+            int value = atoi (buffer);
+            size_t type = NodeType (expr, value);
+            return NewNode (type, value, NULL, NULL);
+        }
+
+        fscanf (base_file, "%[^()]", buffer);
+
+        int value = atoi (buffer);
+        size_t type = NodeType (expr, value);
+
+        /*---RIGHT-ARGUMENT---*/
+        fscanf (base_file, " %c", &bracket);
+        fprintf (expr->dbg_log_file, "second symbol in func = <%c>\n", bracket);
+
+        node_t* new_right = NULL;
+        if (bracket == '(')
+        {
+            ungetc ('(', base_file);
+
+            new_right = RunExpression (expr, base_file);
+        }
+
+        return NewNode (type, value, new_left, new_right);
+    }
+    else
+    {
+        fprintf (expr->dbg_log_file, "ERROR: recursive function return null\n");
+        return NULL;
     }
 }
 // {

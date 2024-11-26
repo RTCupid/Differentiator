@@ -17,6 +17,9 @@ errExpr_t ExpressionCtor (tree_t* expr)
 
     MakeExpression (expr, "Expression.txt");
 
+    printf ("Finish expression construction \n");
+    printf ("expr->root = %p\n", expr->root);
+
     return EXPR_OK;
 }
 
