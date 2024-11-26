@@ -23,59 +23,72 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
 {
     char symbol = '\0';
     fscanf (base_file, " %c", &symbol);
-    fprintf (expr->dbg_log_file, "start symbol = <%c>\n", symbol);
 
-    if (symbol == '(')
+    if (symbol == '(' )
     {
-        int value = 0;
-        if (!fscanf (base_file, "%d", &value))
-        {
-            fprintf (expr->dbg_log_file, "value is not a num\n");
+        char buffer[MAX_LEN_BUF] = {};
+        fscanf (base_file, " %[ ^()]", buffer);
 
-            fscanf (base_file, " %c", (char*)&value);
-            fprintf (expr->dbg_log_file, "value = <%c>\n\n", (char)value);
-        }
-        else
-        {
-            fprintf (expr->dbg_log_file, "value = <%d>\n\n", value);
-        }
-
-        size_t type = NodeType (expr, value);
-        fprintf (expr->dbg_log_file, "type = %lu\n", type);
-
-        node_t* node = NewNode (type, value , NULL, NULL);
-
-        fscanf (base_file, " %c", &symbol);
-        fprintf (expr->dbg_log_file, "end symbol = <%c>\n", symbol);
-
-        if (symbol == ')')
-        {
-            fprintf (expr->dbg_log_file, "return\n");
-            return node;
-        }
-        else if (symbol == '(')
-        {
-            ungetc (symbol, base_file);
-            /*......LEFT......*/
-            node->left  = RunExpression (expr, base_file);
-            /*......RIGHT.....*/
-            node->right = RunExpression (expr, base_file);
-        }
-        fscanf (base_file, " %c", &symbol);
-        fprintf (expr->dbg_log_file, "end symbol = <%c>\n", symbol);
-
-        if (symbol == ')')
-        {
-            return node;
-        }
-        else
-        {
-            fprintf (expr->dbg_log_file, "ERROR: unknown symbol \" not a ( or )\"\n");
-        }
+            size_t NodeType (tree_t* expr, int value);
+            node_t* node = NewNode (type, value , NULL, NULL);
     }
-    fprintf (expr->dbg_log_file, "ERROR: uncorrect file of base\n");
-    return NULL;
 }
+// {
+//     char symbol = '\0';
+//     fscanf (base_file, " %c", &symbol);
+//     fprintf (expr->dbg_log_file, "start symbol = <%c>\n", symbol);
+//
+//     if (symbol == '(')
+//     {
+//         int value = 0;
+//         if (!fscanf (base_file, "%d", &value))
+//         {
+//             fprintf (expr->dbg_log_file, "value is not a num\n");
+//
+//             fscanf (base_file, " %c", (char*)&value);
+//             fprintf (expr->dbg_log_file, "value = <%c>\n\n", (char)value);
+//         }
+//         else
+//         {
+//             fprintf (expr->dbg_log_file, "value = <%d>\n\n", value);
+//         }
+//
+//         size_t type = NodeType (expr, value);
+//         fprintf (expr->dbg_log_file, "type = %lu\n", type);
+//
+//         node_t* node = NewNode (type, value , NULL, NULL);
+//
+//         fscanf (base_file, " %c", &symbol);
+//         fprintf (expr->dbg_log_file, "end symbol = <%c>\n", symbol);
+//
+//         if (symbol == ')')
+//         {
+//             fprintf (expr->dbg_log_file, "return\n");
+//             return node;
+//         }
+//         else if (symbol == '(')
+//         {
+//             ungetc (symbol, base_file);
+//             /*......LEFT......*/
+//             node->left  = RunExpression (expr, base_file);
+//             /*......RIGHT.....*/
+//             node->right = RunExpression (expr, base_file);
+//         }
+//         fscanf (base_file, " %c", &symbol);
+//         fprintf (expr->dbg_log_file, "end symbol = <%c>\n", symbol);
+//
+//         if (symbol == ')')
+//         {
+//             return node;
+//         }
+//         else
+//         {
+//             fprintf (expr->dbg_log_file, "ERROR: unknown symbol \" not a ( or )\"\n");
+//         }
+//     }
+//     fprintf (expr->dbg_log_file, "ERROR: uncorrect file of base\n");
+//     return NULL;
+// }
 
 size_t NodeType (tree_t* expr, int value)
  {

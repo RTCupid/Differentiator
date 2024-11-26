@@ -1,6 +1,8 @@
 #ifndef DIFFERENTIATOR_H
     #define DIFFERENTIATOR_H
 
+    const size_t MAX_LEN_BUF = 64;
+
     enum errExpr_t
     {
         EXPR_OK = 0,
@@ -44,18 +46,22 @@
     FILE* tex_file;
     } tree_t;
 
-    errExpr_t ExpressionCtor (tree_t* expr);
+//--ret-value----function--------------------argument-------------------------------------------------------------
 
-    void WriterTexExpression (tree_t* expr);
+    errExpr_t   ExpressionCtor              (tree_t* expr);
 
-    void RecursiveWriteExpression (tree_t* expr, node_t* node);
+    void        WriterTexExpression         (tree_t* expr);
 
-    void ExpressionDtor (tree_t* expr);
+    void        RecursiveWriteExpression    (tree_t* expr, node_t* node);
 
-    void ClearTree (node_t* node);
+    void        ExpressionDtor              (tree_t* expr);
 
-    node_t* NewNode (size_t type, int value, node_t* left, node_t* right);
+    void        ClearTree                   (node_t* node);
 
-    double Evaluate (node_t* node);
+    node_t*     NewNode                     (size_t type, int value, node_t* left, node_t* right);
+
+    double      Evaluate                    (node_t* node);
+
+//------------------------------------------------------------------------------------------------------------
 
 #endif
