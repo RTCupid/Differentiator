@@ -5,10 +5,12 @@
 
     struct node_t;
 
-    errExpr_t MakeExpression (tree_t* expr, const char* namefile);
+    errExpr_t   MakeExpression  (tree_t* expr, const char* namefile);
 
-    node_t* RunExpression (tree_t* expr, FILE* base_file);
+    node_t*     RunExpression   (tree_t* expr, FILE* base_file);
 
-    size_t NodeType (tree_t* expr, int value);
+    void        InputExpression (tree_t* expr, size_t* sizeOfFile);
+
+    size_t      NodeType        (tree_t* expr, int value);
 
 #endif

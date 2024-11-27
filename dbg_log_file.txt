@@ -50,4 +50,12 @@ return
 
 end bracket = <)>
 end bracket = <)>
+
+26
+count of char = 26
+
+(((30)%(50))/((12)&(x)))
+
+sizeOfFile = <26>
+
 \frac{30%50}{12&x}

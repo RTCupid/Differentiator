@@ -142,6 +142,9 @@ void ExpressionDtor (tree_t* expr)
 
     ClearTree (expr->root);
 
+    free (expr->data);
+    expr->data = 0;
+
     expr->crnt_node = NULL;
 }
 

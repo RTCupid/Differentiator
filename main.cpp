@@ -26,6 +26,9 @@ int main ()
     tree_t expr = {};
     ExpressionCtor (&expr);
 
+    InputExpression (&expr, &expr.size_data);
+
+    printf ("expression : <%s>\n", expr.data);
     //printf ("Answer = %lf\n", Evaluate (expr.root));
 
     DifferentiatorGraphviz (&expr);

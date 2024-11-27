@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <ctype.h>
+#include <string.h>
+#include <stdbool.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <errno.h>
 
 #include "Differentiator.h"
 #include "DiffVerificator.h"
@@ -100,62 +106,47 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
         return NULL;
     }
 }
-// {
-//     char symbol = '\0';
-//     fscanf (base_file, " %c", &symbol);
-//     fprintf (expr->dbg_log_file, "start symbol = <%c>\n", symbol);
-//
-//     if (symbol == '(')
-//     {
-//         int value = 0;
-//         if (!fscanf (base_file, "%d", &value))
-//         {
-//             fprintf (expr->dbg_log_file, "value is not a num\n");
-//
-//             fscanf (base_file, " %c", (char*)&value);
-//             fprintf (expr->dbg_log_file, "value = <%c>\n\n", (char)value);
-//         }
-//         else
-//         {
-//             fprintf (expr->dbg_log_file, "value = <%d>\n\n", value);
-//         }
-//
-//         size_t type = NodeType (expr, value);
-//         fprintf (expr->dbg_log_file, "type = %lu\n", type);
-//
-//         node_t* node = NewNode (type, value , NULL, NULL);
-//
-//         fscanf (base_file, " %c", &symbol);
-//         fprintf (expr->dbg_log_file, "end symbol = <%c>\n", symbol);
-//
-//         if (symbol == ')')
-//         {
-//             fprintf (expr->dbg_log_file, "return\n");
-//             return node;
-//         }
-//         else if (symbol == '(')
-//         {
-//             ungetc (symbol, base_file);
-//             /*......LEFT......*/
-//             node->left  = RunExpression (expr, base_file);
-//             /*......RIGHT.....*/
-//             node->right = RunExpression (expr, base_file);
-//         }
-//         fscanf (base_file, " %c", &symbol);
-//         fprintf (expr->dbg_log_file, "end symbol = <%c>\n", symbol);
-//
-//         if (symbol == ')')
-//         {
-//             return node;
-//         }
-//         else
-//         {
-//             fprintf (expr->dbg_log_file, "ERROR: unknown symbol \" not a ( or )\"\n");
-//         }
-//     }
-//     fprintf (expr->dbg_log_file, "ERROR: uncorrect file of base\n");
-//     return NULL;
-// }
+
+void InputExpression (tree_t* expr, size_t* sizeOfFile)
+{
+    struct stat fileInf = {};
+
+    int err = stat ("Expression.txt", &fileInf);
+    if (err != 0)
+    {
+        fprintf(expr->dbg_log_file, "Stat err %d\n", err);
+    }
+
+    fprintf (expr->dbg_log_file, "\n%lu\n", (size_t)fileInf.st_size);
+    fprintf (expr->dbg_log_file, "count of char = %lu\n", (size_t)fileInf.st_size / sizeof (char));
+
+    char* expression = (char*)calloc ((size_t)fileInf.st_size + 1, sizeof(char));      // каллочу буффер, чтобы в него считать текст
+
+    FILE* expr_file = fopen ("Expression.txt", "rt");
+
+    if (expr_file == NULL)
+    {
+        fprintf (expr->dbg_log_file, "File opening error\n");
+        fprintf (expr->dbg_log_file, "errno = <%d>\n", errno);
+        perror("expression.txt\n");
+    }
+
+    *sizeOfFile = fread (expression, sizeof (char), (size_t)fileInf.st_size, expr_file); // с помощью fread читаю файл в буффер, сохраняю возвращаемое значение fread ()
+
+    if (*sizeOfFile == 0)
+    {
+        fprintf (expr->dbg_log_file, "errno = <%d>\n", errno);
+        perror ("Onegin.txt");
+    }
+
+    fprintf (expr->dbg_log_file, "\n%s\n", expression);                    // вывожу вид выражения
+
+    fclose (expr_file);                                                   // закрываю файл
+
+    fprintf (expr->dbg_log_file, "sizeOfFile = <%zu>\n\n", *sizeOfFile);
+
+    expr->data = expression;
+}
 
 size_t NodeType (tree_t* expr, int value)
  {
