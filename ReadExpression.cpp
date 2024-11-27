@@ -42,6 +42,27 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
             ungetc ('(', base_file);
 
             new_left = RunExpression (expr, base_file);
+
+            char operation = '\0';
+            fscanf (base_file, " %c", &operation);
+
+            //int value = atoi (buffer);
+            fprintf (expr->dbg_log_file, "main value = <%c>\n", operation);
+            size_t type = NodeType (expr, operation);
+
+            /*---RIGHT-ARGUMENT---*/
+            fscanf (base_file, " %c", &bracket);
+            fprintf (expr->dbg_log_file, "second symbol in func = <%c>\n", bracket);
+
+            node_t* new_right = NULL;
+            if (bracket == '(')
+            {
+                ungetc ('(', base_file);
+
+                new_right = RunExpression (expr, base_file);
+            }
+
+            return NewNode (type, operation, new_left, new_right);
         }
         else if (bracket == ')')
         {
@@ -49,25 +70,11 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
             size_t type = NodeType (expr, value);
             return NewNode (type, value, NULL, NULL);
         }
-
-        fscanf (base_file, "%[^()]", buffer);
-
-        int value = atoi (buffer);
-        size_t type = NodeType (expr, value);
-
-        /*---RIGHT-ARGUMENT---*/
-        fscanf (base_file, " %c", &bracket);
-        fprintf (expr->dbg_log_file, "second symbol in func = <%c>\n", bracket);
-
-        node_t* new_right = NULL;
-        if (bracket == '(')
+        else
         {
-            ungetc ('(', base_file);
-
-            new_right = RunExpression (expr, base_file);
+            fprintf (expr->dbg_log_file, "ERROR: invalid syntax\n");
+            return NULL;
         }
-
-        return NewNode (type, value, new_left, new_right);
     }
     else
     {

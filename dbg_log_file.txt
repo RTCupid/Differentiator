@@ -5,10 +5,11 @@ start symbol = <(>
 <30>
 first symbol in func = <)>
 In NodeType value = 30
-In NodeType value = 0
+main value = <%>
+In NodeType value = 37
 second symbol in func = <(>
 start symbol = <(>
 <50>
 first symbol in func = <)>
 In NodeType value = 50
-0
+30%50
