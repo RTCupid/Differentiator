@@ -45,9 +45,9 @@ third bracket in func = <(>
 first bracket = <(>
 <x>
 second bracket in func = <)>
-In NodeType value = 0
+In NodeType value = 120
 return
 
 end bracket = <)>
 end bracket = <)>
-\frac{30%50}{12&0}
+\frac{30%50}{12&x}

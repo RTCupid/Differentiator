@@ -13,5 +13,5 @@ digraph G {
 	 node0x503000000130 -> node0x5030000000d0 [ style=bold; weight=1000; ];
 	 node0x503000000130 -> node0x503000000100 [ style=bold; weight=1000; ];
 	 node0x5030000000d0 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "12 " ];
-	 node0x503000000100 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "0 " ];
+	 node0x503000000100 [shape=Mrecord; style=filled; color="#4a536b"; label =  "x " ];
 }

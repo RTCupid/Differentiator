@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <ctype.h>
 
 #include "Differentiator.h"
 #include "DiffVerificator.h"
@@ -29,7 +30,7 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
     if (bracket == '(' )
     {
         char buffer[MAX_LEN_BUF] = {};
-        fscanf (base_file, "%[^()]", buffer);
+        fscanf (base_file, " %[^()]", buffer);
         fprintf (expr->dbg_log_file, "<%s>\n", buffer);
 
         /*---LEFT-ARGUMENT---*/
@@ -73,7 +74,15 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
 
         if (bracket == ')')
         {
-            int value = atoi (buffer);
+            int value = 0;
+            if (isalpha(buffer[0]))
+            {
+                value = 'x';
+            }
+            else
+            {
+                value = atoi (buffer);
+            }
             size_t type = NodeType (expr, value);
 
             fprintf (expr->dbg_log_file, "return\n\n");

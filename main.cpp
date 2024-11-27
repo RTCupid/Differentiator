@@ -30,6 +30,8 @@ int main ()
 
     DifferentiatorGraphviz (&expr);
 
+    //DiffDump (&expr);
+
     WriterTexExpression (&expr);
 
     ExpressionDtor (&expr);
