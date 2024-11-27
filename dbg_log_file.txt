@@ -1,15 +1,53 @@
-start symbol = <(>
+
+first bracket = <(>
 <>
-first symbol in func = <(>
-start symbol = <(>
+second bracket in func = <(>
+
+first bracket = <(>
+<>
+second bracket in func = <(>
+
+first bracket = <(>
 <30>
-first symbol in func = <)>
+second bracket in func = <)>
 In NodeType value = 30
+return
+
 main value = <%>
 In NodeType value = 37
-second symbol in func = <(>
-start symbol = <(>
+third bracket in func = <(>
+
+first bracket = <(>
 <50>
-first symbol in func = <)>
+second bracket in func = <)>
 In NodeType value = 50
-30%50
+return
+
+end bracket = <)>
+main value = </>
+In NodeType value = 47
+third bracket in func = <(>
+
+first bracket = <(>
+<>
+second bracket in func = <(>
+
+first bracket = <(>
+<12>
+second bracket in func = <)>
+In NodeType value = 12
+return
+
+main value = <&>
+In NodeType value = 38
+third bracket in func = <(>
+
+first bracket = <(>
+<x>
+second bracket in func = <)>
+In NodeType value = 0
+return
+
+end bracket = <)>
+end bracket = <)>
+\frac{30%50}{12&0}

@@ -24,7 +24,7 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
 {
     char bracket = '\0';
     fscanf (base_file, " %c", &bracket);
-    fprintf (expr->dbg_log_file, "start symbol = <%c>\n", bracket);
+    fprintf (expr->dbg_log_file, "\nfirst bracket = <%c>\n", bracket);
 
     if (bracket == '(' )
     {
@@ -34,7 +34,7 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
 
         /*---LEFT-ARGUMENT---*/
         fscanf (base_file, " %c", &bracket);
-        fprintf (expr->dbg_log_file, "first symbol in func = <%c>\n", bracket);
+        fprintf (expr->dbg_log_file, "second bracket in func = <%c>\n", bracket);
 
         node_t* new_left = NULL;
         if (bracket == '(')
@@ -52,7 +52,7 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
 
             /*---RIGHT-ARGUMENT---*/
             fscanf (base_file, " %c", &bracket);
-            fprintf (expr->dbg_log_file, "second symbol in func = <%c>\n", bracket);
+            fprintf (expr->dbg_log_file, "third bracket in func = <%c>\n", bracket);
 
             node_t* new_right = NULL;
             if (bracket == '(')
@@ -62,17 +62,26 @@ node_t* RunExpression (tree_t* expr, FILE* base_file)
                 new_right = RunExpression (expr, base_file);
             }
 
-            return NewNode (type, operation, new_left, new_right);
+            fscanf (base_file, " %c", &bracket);
+            fprintf (expr->dbg_log_file, "end bracket = <%c>\n", bracket);
+
+            if (bracket == ')')
+            {
+                return NewNode (type, operation, new_left, new_right);
+            }
         }
-        else if (bracket == ')')
+
+        if (bracket == ')')
         {
             int value = atoi (buffer);
             size_t type = NodeType (expr, value);
+
+            fprintf (expr->dbg_log_file, "return\n\n");
             return NewNode (type, value, NULL, NULL);
         }
         else
         {
-            fprintf (expr->dbg_log_file, "ERROR: invalid syntax\n");
+            fprintf (expr->dbg_log_file, "ERROR: recursive function return null\n");
             return NULL;
         }
     }

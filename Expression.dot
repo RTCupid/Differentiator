@@ -1,9 +1,17 @@
 digraph G {
 	rankdir = HR;
 	bgcolor="#F7F9FB"
+	 node0x503000000160 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "/ " ];
+	 node0x503000000160 -> node0x5030000000a0 [ style=bold; weight=1000; ];
+	 node0x503000000160 -> node0x503000000130 [ style=bold; weight=1000; ];
 	 node0x5030000000a0 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "% " ];
 	 node0x5030000000a0 -> node0x503000000040 [ style=bold; weight=1000; ];
 	 node0x5030000000a0 -> node0x503000000070 [ style=bold; weight=1000; ];
 	 node0x503000000040 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "30 " ];
 	 node0x503000000070 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "50 " ];
+	 node0x503000000130 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "& " ];
+	 node0x503000000130 -> node0x5030000000d0 [ style=bold; weight=1000; ];
+	 node0x503000000130 -> node0x503000000100 [ style=bold; weight=1000; ];
+	 node0x5030000000d0 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "12 " ];
+	 node0x503000000100 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "0 " ];
 }

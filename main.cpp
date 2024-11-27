@@ -14,11 +14,19 @@ int main ()
     printf (GRN "Start programm\n" RESET);
 
     printf ("%% - plus\n& - minus\n");
+    printf ("EQU = '='  = <%d>\n"
+            "ADD = '%%'  = <%d>\n"
+            "SUB = '&'  = <%d>\n"
+            "MUL = '*'  = <%d>\n"
+            "DIV = '/'  = <%d>\n"
+            "    = '('  = <%d>\n"
+            "    = ')'  = <%d>\n"
+            "    = 'x'  = <%d>\n", '=', '%', '&', '*', '/', '(', ')', 'x');
 
     tree_t expr = {};
     ExpressionCtor (&expr);
 
-    //printf ("Answer = %lf\n", Evaluate (expr.root->left));
+    //printf ("Answer = %lf\n", Evaluate (expr.root));
 
     DifferentiatorGraphviz (&expr);
 
