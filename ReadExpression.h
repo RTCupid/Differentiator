@@ -7,7 +7,7 @@
 
     errExpr_t   MakeExpression  (tree_t* expr, const char* namefile);
 
-    node_t*     RunExpression   (tree_t* expr, FILE* base_file);
+    node_t*     RunExpression   (tree_t* expr);
 
     void        InputExpression (tree_t* expr, size_t* sizeOfFile);
 

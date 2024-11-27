@@ -1,56 +1,4 @@
 
-first bracket = <(>
-<>
-second bracket in func = <(>
-
-first bracket = <(>
-<>
-second bracket in func = <(>
-
-first bracket = <(>
-<30>
-second bracket in func = <)>
-In NodeType value = 30
-return
-
-main value = <%>
-In NodeType value = 37
-third bracket in func = <(>
-
-first bracket = <(>
-<50>
-second bracket in func = <)>
-In NodeType value = 50
-return
-
-end bracket = <)>
-main value = </>
-In NodeType value = 47
-third bracket in func = <(>
-
-first bracket = <(>
-<>
-second bracket in func = <(>
-
-first bracket = <(>
-<12>
-second bracket in func = <)>
-In NodeType value = 12
-return
-
-main value = <&>
-In NodeType value = 38
-third bracket in func = <(>
-
-first bracket = <(>
-<x>
-second bracket in func = <)>
-In NodeType value = 120
-return
-
-end bracket = <)>
-end bracket = <)>
-
 26
 count of char = 26
 
@@ -58,4 +6,42 @@ count of char = 26
 
 sizeOfFile = <26>
 
-\frac{30%50}{12&x}
+first bracket = <(>
+
+  ID = 1
+offset = 1
+<>
+  ID = 2
+second bracket in func = <(>
+  ID = 3
+  ID = 2
+first bracket = <(>
+
+  ID = 3
+offset = 2
+<30>
+  ID = 5
+second bracket in func = <)>
+  ID = 6
+In NodeType value = 30
+return
+
+main value = <%>
+  ID = 7
+In NodeType value = 37
+third bracket in func = <(>
+  ID = 8
+  ID = 7
+first bracket = <(>
+
+  ID = 8
+offset = 2
+<50>
+  ID = 10
+second bracket in func = <)>
+  ID = 11
+In NodeType value = 50
+return
+
+end bracket = <)>
+  ID = 12

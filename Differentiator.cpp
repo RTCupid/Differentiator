@@ -15,6 +15,8 @@ errExpr_t ExpressionCtor (tree_t* expr)
 
     expr->crnt_node = NULL;
 
+    InputExpression (expr, &expr->size_data);
+
     MakeExpression (expr, "Expression.txt");
 
     printf ("Finish expression construction \n");

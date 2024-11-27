@@ -19,7 +19,7 @@ errExpr_t MakeExpression (tree_t* expr, const char* namefile)
     FILE* base_file = fopen (namefile, "rt");
     VerifyOpenFile (base_file, "MakeExpression");
 
-    expr->root = RunExpression (expr, base_file);
+    expr->root = RunExpression (expr);
 
     expr->crnt_node = expr->root;
 
@@ -27,50 +27,72 @@ errExpr_t MakeExpression (tree_t* expr, const char* namefile)
     return EXPR_OK;
 }
 
-node_t* RunExpression (tree_t* expr, FILE* base_file)
+node_t* RunExpression (tree_t* expr)
 {
     char bracket = '\0';
-    fscanf (base_file, " %c", &bracket);
-    fprintf (expr->dbg_log_file, "\nfirst bracket = <%c>\n", bracket);
+    static int ID = 0;
+    //fprintf (expr->dbg_log_file, "  ID = %d\n", ID);
+
+    int offset = 0;
+    sscanf (expr->data + ID, "%c%n", &bracket, &offset);
+    ID += offset;
+    fprintf (expr->dbg_log_file, "first bracket = <%c>\n", bracket);
+    fprintf (expr->dbg_log_file, "\n  ID = %d\n", ID);
 
     if (bracket == '(' )
     {
         char buffer[MAX_LEN_BUF] = {};
-        fscanf (base_file, " %[^()]", buffer);
+
+        sscanf (expr->data + ID, "%[^()]%n", buffer, &offset);
+        fprintf (expr->dbg_log_file, "offset = %d\n", offset);
+        ID += offset;
         fprintf (expr->dbg_log_file, "<%s>\n", buffer);
+        fprintf (expr->dbg_log_file, "  ID = %d\n", ID);
 
         /*---LEFT-ARGUMENT---*/
-        fscanf (base_file, " %c", &bracket);
+        sscanf (expr->data + ID, "%c%n", &bracket, &offset);
+        ID += offset;
         fprintf (expr->dbg_log_file, "second bracket in func = <%c>\n", bracket);
+        fprintf (expr->dbg_log_file, "  ID = %d\n", ID);
 
         node_t* new_left = NULL;
         if (bracket == '(')
         {
-            ungetc ('(', base_file);
+            //putc ('(', base_file);
+            ID--;
+            fprintf (expr->dbg_log_file, "  ID = %d\n", ID);
 
-            new_left = RunExpression (expr, base_file);
+
+            new_left = RunExpression (expr);
 
             char operation = '\0';
-            fscanf (base_file, " %c", &operation);
-
-            //int value = atoi (buffer);
+            sscanf (expr->data + ID, "%c%n", &operation, &offset);
+            ID += offset;
             fprintf (expr->dbg_log_file, "main value = <%c>\n", operation);
+            fprintf (expr->dbg_log_file, "  ID = %d\n", ID);
+
             size_t type = NodeType (expr, operation);
 
             /*---RIGHT-ARGUMENT---*/
-            fscanf (base_file, " %c", &bracket);
+            sscanf (expr->data + ID, "%c%n", &bracket, &offset);
+            ID += offset;
             fprintf (expr->dbg_log_file, "third bracket in func = <%c>\n", bracket);
+            fprintf (expr->dbg_log_file, "  ID = %d\n", ID);
 
             node_t* new_right = NULL;
             if (bracket == '(')
             {
-                ungetc ('(', base_file);
+                //ungetc ('(', base_file);
+                ID--;
+                fprintf (expr->dbg_log_file, "  ID = %d\n", ID);
 
-                new_right = RunExpression (expr, base_file);
+                new_right = RunExpression (expr);
             }
 
-            fscanf (base_file, " %c", &bracket);
+            sscanf (expr->data + ID, "%c%n", &bracket, &offset);
+            ID += offset;
             fprintf (expr->dbg_log_file, "end bracket = <%c>\n", bracket);
+            fprintf (expr->dbg_log_file, "  ID = %d\n", ID);
 
             if (bracket == ')')
             {
