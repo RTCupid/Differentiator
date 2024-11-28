@@ -26,6 +26,13 @@ int main ()
     tree_t expr = {};
     ExpressionCtor (&expr);
 
+    char array[52] = "(((";
+    char buffer[52] = {};
+    int offset = 0;
+    sscanf (array, "%[^(]%n", buffer, &offset);
+    printf ("buffer = <%s>\n", buffer);
+    printf ("offset = %d\n", offset);
+
     printf ("expression : <%s>\n", expr.data);
     //printf ("Answer = %lf\n", Evaluate (expr.root));
 

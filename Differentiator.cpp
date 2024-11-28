@@ -15,7 +15,7 @@ errExpr_t ExpressionCtor (tree_t* expr)
 
     expr->crnt_node = NULL;
 
-    InputExpression (expr, &expr->size_data);
+    InputExpression (expr);
 
     MakeExpression (expr, "Expression.txt");
 

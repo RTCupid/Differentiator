@@ -42,7 +42,7 @@
     node_t* root;
     node_t* crnt_node;
     char* data;
-    size_t size_data;
+    int size_data;
     FILE* log_file;
     FILE* dbg_log_file;
     FILE* tex_file;

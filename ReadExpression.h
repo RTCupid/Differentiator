@@ -9,7 +9,9 @@
 
     node_t*     RunExpression   (tree_t* expr);
 
-    void        InputExpression (tree_t* expr, size_t* sizeOfFile);
+    void        InputExpression (tree_t* expr);
+
+    void        PrintExprDump (tree_t* expr, int ID);
 
     size_t      NodeType        (tree_t* expr, int value);
 

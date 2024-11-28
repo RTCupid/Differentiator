@@ -1,47 +1,313 @@
 
-26
-count of char = 26
+25
+count of char = 25
 
-(((30)%(50))/((12)&(x)))
+(((30)%(5))/((12)&(x)))
 
-sizeOfFile = <26>
+sizeOfFile = <25>
 
+
+Reader:
+(((30)%(5))/((12)&(x)))
+^________________________
+0123456789
+
+scanf:
 first bracket = <(>
+ID -> 1
 
-  ID = 1
-offset = 1
+Reader:
+(((30)%(5))/((12)&(x)))
+_^_______________________
+0123456789
+
+scanf:
+nsymbols = 0
+offset = 0
 <>
-  ID = 2
-second bracket in func = <(>
-  ID = 3
-  ID = 2
-first bracket = <(>
+ID -> 1
 
-  ID = 3
+Reader:
+(((30)%(5))/((12)&(x)))
+_^_______________________
+0123456789
+
+scanf:
+second bracket in func = <(>
+ID -> 2
+ID -> 1
+
+Reader:
+(((30)%(5))/((12)&(x)))
+_^_______________________
+0123456789
+
+scanf:
+first bracket = <(>
+ID -> 2
+
+Reader:
+(((30)%(5))/((12)&(x)))
+__^______________________
+0123456789
+
+scanf:
+nsymbols = 0
+offset = 0
+<>
+ID -> 2
+
+Reader:
+(((30)%(5))/((12)&(x)))
+__^______________________
+0123456789
+
+scanf:
+second bracket in func = <(>
+ID -> 3
+ID -> 2
+
+Reader:
+(((30)%(5))/((12)&(x)))
+__^______________________
+0123456789
+
+scanf:
+first bracket = <(>
+ID -> 3
+
+Reader:
+(((30)%(5))/((12)&(x)))
+___^_____________________
+0123456789
+
+scanf:
+nsymbols = 1
 offset = 2
 <30>
-  ID = 5
+ID -> 5
+
+Reader:
+(((30)%(5))/((12)&(x)))
+_____^___________________
+0123456789
+
+scanf:
 second bracket in func = <)>
-  ID = 6
+ID -> 6
 In NodeType value = 30
 return
 
-main value = <%>
-  ID = 7
-In NodeType value = 37
-third bracket in func = <(>
-  ID = 8
-  ID = 7
-first bracket = <(>
 
-  ID = 8
-offset = 2
-<50>
-  ID = 10
+Reader:
+(((30)%(5))/((12)&(x)))
+______^__________________
+0123456789
+
+scanf:
+main value = <%>
+ID -> 7
+In NodeType value = 37
+
+Reader:
+(((30)%(5))/((12)&(x)))
+_______^_________________
+0123456789
+
+scanf:
+third bracket in func = <(>
+ID -> 8
+ID -> 7
+
+Reader:
+(((30)%(5))/((12)&(x)))
+_______^_________________
+0123456789
+
+scanf:
+first bracket = <(>
+ID -> 8
+
+Reader:
+(((30)%(5))/((12)&(x)))
+________^________________
+0123456789
+
+scanf:
+nsymbols = 1
+offset = 1
+<5>
+ID -> 9
+
+Reader:
+(((30)%(5))/((12)&(x)))
+_________^_______________
+0123456789
+
+scanf:
 second bracket in func = <)>
-  ID = 11
-In NodeType value = 50
+ID -> 10
+In NodeType value = 5
 return
 
+
+Reader:
+(((30)%(5))/((12)&(x)))
+__________^______________
+0123456789
+
+scanf:
 end bracket = <)>
-  ID = 12
+ID -> 11
+
+Reader:
+(((30)%(5))/((12)&(x)))
+___________^_____________
+0123456789
+
+scanf:
+main value = </>
+ID -> 12
+In NodeType value = 47
+
+Reader:
+(((30)%(5))/((12)&(x)))
+____________^____________
+0123456789
+
+scanf:
+third bracket in func = <(>
+ID -> 13
+ID -> 12
+
+Reader:
+(((30)%(5))/((12)&(x)))
+____________^____________
+0123456789
+
+scanf:
+first bracket = <(>
+ID -> 13
+
+Reader:
+(((30)%(5))/((12)&(x)))
+_____________^___________
+0123456789
+
+scanf:
+nsymbols = 0
+offset = 0
+<>
+ID -> 13
+
+Reader:
+(((30)%(5))/((12)&(x)))
+_____________^___________
+0123456789
+
+scanf:
+second bracket in func = <(>
+ID -> 14
+ID -> 13
+
+Reader:
+(((30)%(5))/((12)&(x)))
+_____________^___________
+0123456789
+
+scanf:
+first bracket = <(>
+ID -> 14
+
+Reader:
+(((30)%(5))/((12)&(x)))
+______________^__________
+0123456789
+
+scanf:
+nsymbols = 1
+offset = 2
+<12>
+ID -> 16
+
+Reader:
+(((30)%(5))/((12)&(x)))
+________________^________
+0123456789
+
+scanf:
+second bracket in func = <)>
+ID -> 17
+In NodeType value = 12
+return
+
+
+Reader:
+(((30)%(5))/((12)&(x)))
+_________________^_______
+0123456789
+
+scanf:
+main value = <&>
+ID -> 18
+In NodeType value = 38
+
+Reader:
+(((30)%(5))/((12)&(x)))
+__________________^______
+0123456789
+
+scanf:
+third bracket in func = <(>
+ID -> 19
+ID -> 18
+
+Reader:
+(((30)%(5))/((12)&(x)))
+__________________^______
+0123456789
+
+scanf:
+first bracket = <(>
+ID -> 19
+
+Reader:
+(((30)%(5))/((12)&(x)))
+___________________^_____
+0123456789
+
+scanf:
+nsymbols = 1
+offset = 1
+<x>
+ID -> 20
+
+Reader:
+(((30)%(5))/((12)&(x)))
+____________________^____
+0123456789
+
+scanf:
+second bracket in func = <)>
+ID -> 21
+In NodeType value = 120
+return
+
+
+Reader:
+(((30)%(5))/((12)&(x)))
+_____________________^___
+0123456789
+
+scanf:
+end bracket = <)>
+ID -> 22
+
+Reader:
+(((30)%(5))/((12)&(x)))
+______________________^__
+0123456789
+
+scanf:
+end bracket = <)>
+ID -> 23
