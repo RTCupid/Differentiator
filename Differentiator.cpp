@@ -78,7 +78,7 @@ node_t* Copy (node_t* old_node)
     return NewNode (old_node->type, old_node->value, Copy (old_node->left), Copy (old_node->right));
 }
 
-node_t* SimplifyExpr (tree_t* expr, node_t* node)
+node_t* SimplifyExpr (tree_t* expr, node_t* node) //you (йоу) simplify
 {
     int n_change_elems = 1;
     while (n_change_elems != 0)
