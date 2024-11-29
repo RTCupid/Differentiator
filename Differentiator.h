@@ -59,7 +59,9 @@
 
     errExpr_t   ExpressionCtor              (tree_t* expr);
 
-    node_t*     Differentiator (tree_t* expr, node_t* node);
+    node_t*     Differentiator              (tree_t* expr, node_t* node);
+
+    node_t*     Copy                        (node_t* old_node);
 
     void        WriterTexExpression         (tree_t* expr);
 

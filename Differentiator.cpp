@@ -48,14 +48,35 @@ node_t* Differentiator (tree_t* expr, node_t* node)
             {
                 return NewNode (OP, SUB, Differentiator (expr, node->left), Differentiator (expr, node->right));
             }
+            case MUL:
+            {
+                return NewNode (OP, ADD,
+                                NewNode (OP, MUL, Differentiator (expr, node->left), Copy (node->right)),
+                                NewNode (OP, MUL, Copy (node->left), Differentiator (expr, node->right)));
+            }
+            case DIV:
+            {
+                return NewNode (OP, DIV, NewNode (OP, SUB, NewNode (OP, MUL, Differentiator (expr, node->left), Copy (node->right)),
+                                                           NewNode (OP, MUL, Copy (node->left), Differentiator (expr, node->right))),
+                                         NewNode (OP, MUL, Copy (node->right), Copy (node->right)));
+            }
             default:
             {
                 assert (0);
             }
         }
     }
+    fprintf (expr->dbg_log_file, "ERROR: unknown type\n");
     return NULL;
+}
 
+node_t* Copy (node_t* old_node)
+{
+    if (old_node->type == NUM || old_node->type == VAR)
+    {
+        return NULL;
+    }
+    return NewNode (old_node->type, old_node->value, Copy (old_node->left), Copy (old_node->right));
 }
 
 
