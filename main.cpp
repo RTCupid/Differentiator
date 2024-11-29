@@ -43,7 +43,7 @@ int main ()
 
     //DiffDump (&expr);
 
-    //WriterTexExpression (&expr);
+    WriterTexExpression (&expr);
 
     ExpressionDtor (&expr);
     printf ("End Programm\n");

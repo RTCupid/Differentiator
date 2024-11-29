@@ -72,7 +72,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
 
 node_t* Copy (node_t* old_node)
 {
-    if (old_node->type == NUM || old_node->type == VAR)
+    if (old_node == NULL)
     {
         return NULL;
     }
@@ -87,12 +87,21 @@ void WriterTexExpression (tree_t* expr)
                              "\\usepackage[english, russian]{babel}\n"
                              "\\usepackage[T2A]{fontenc}\n"
                              "\\usepackage[utf8]{inputenc}\n\n");
-    fprintf (expr->tex_file, "\\begin{document}\n\t");
-    fprintf (expr->tex_file, "\\[");
+    fprintf (expr->tex_file, "\\begin{document}\n");
+    //Expression
+    fprintf (expr->tex_file, "\t$\\left(");
 
     RecursiveWriteExpression (expr, expr->root);
 
-    fprintf (expr->tex_file, "\\]");
+    fprintf (expr->tex_file, "\\right)'$\n");
+
+    //Differential
+    fprintf (expr->tex_file, "\t$= ");
+
+    RecursiveWriteExpression (expr, expr->diff);
+
+    fprintf (expr->tex_file, "$\n");
+
     fprintf (expr->tex_file, "\n\\end{document}\n");
     fclose (expr->tex_file);
 }
@@ -116,16 +125,29 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
             fprintf (expr->tex_file, "}");
             fprintf (expr->dbg_log_file, "}");
         }
-        else
+        else if (node->value == MUL)
         {
             /*...left...*/
             RecursiveWriteExpression (expr, node->left);
 
-            fprintf (expr->tex_file, "\\%c", node->value);
+            fprintf (expr->tex_file, "%c", node->value);
             fprintf (expr->dbg_log_file, "%c", node->value);
 
             /*...right...*/
             RecursiveWriteExpression (expr, node->right);
+        }
+        else
+        {
+            /*...left...*/
+            fprintf (expr->tex_file, "(");
+            RecursiveWriteExpression (expr, node->left);
+
+            fprintf (expr->tex_file, "%c", node->value);
+            fprintf (expr->dbg_log_file, "%c", node->value);
+
+            /*...right...*/
+            RecursiveWriteExpression (expr, node->right);
+            fprintf (expr->tex_file, ")");
         }
     }
     else if (node->type == NUM)
