@@ -63,6 +63,8 @@
 
     node_t*     SimplifyExpr                (tree_t* expr, node_t* node);
 
+    bool        IsNotConstExpression        (tree_t* expr, node_t* node);
+
     node_t*     Copy                        (node_t* old_node);
 
     void        WriterTexExpression         (tree_t* expr);

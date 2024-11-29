@@ -2,7 +2,7 @@ CC = g++
 FLAGS = -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ \
 	-Waggressive-loop-optimizations -Wc++14-compat -Wmissing-declarations \
 	-Wcast-align -Wcast-qual -Wchar-subscripts -Wconditionally-supported -Wconversion \
-	-Wctor-dtor-privacy -Wempty-body -Wfloat-equal -Wformat-nonliteral -Wformat-security \
+	-Wctor-dtor-privacy -Wempty-body -Wformat-nonliteral -Wformat-security \
 	-Wformat-signedness -Wformat=2 -Winline -Wlogical-op -Wnon-virtual-dtor -Wopenmp-simd \
 	-Woverloaded-virtual -Wpacked -Wpointer-arith -Winit-self -Wredundant-decls -Wshadow \
 	-Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=2 -Wsuggest-attribute=noreturn \

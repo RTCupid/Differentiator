@@ -8,7 +8,7 @@
 #include "DiffVerificator.h"
 #include "ReadExpression.h"
 
-//static double GLOBALX = 0;
+static double GLOBALX = 0;
 
 errExpr_t ExpressionCtor (tree_t* expr)
 {
@@ -58,9 +58,11 @@ node_t* Differentiator (tree_t* expr, node_t* node)
         }
         if (node->value == DIV)
         {
-            return NewNode (OP, DIV, NewNode (OP, SUB, NewNode (OP, MUL, Differentiator (expr, node->left), Copy (node->right)),
-                                                        NewNode (OP, MUL, Copy (node->left), Differentiator (expr, node->right))),
-                                        NewNode (OP, MUL, Copy (node->right), Copy (node->right)));
+            return NewNode (OP, DIV,
+                        NewNode (OP, SUB,
+                            NewNode (OP, MUL, Differentiator (expr, node->left), Copy (node->right)),
+                            NewNode (OP, MUL, Copy (node->left), Differentiator (expr, node->right))),
+                        NewNode (OP, MUL, Copy (node->right), Copy (node->right)));
         }
     }
     fprintf (expr->dbg_log_file, "ERROR: unknown type\n");
@@ -92,7 +94,7 @@ node_t* SimplifyExpr (tree_t* expr, node_t* node)
         return node;
     }
 
-    if (isfinite (Evaluate (node)))
+    if (!IsNotConstExpression (expr, node))
     {
         node_t* new_node = NewNode (NUM, Evaluate (node), NULL, NULL);
         ClearTree (node);
@@ -104,6 +106,28 @@ node_t* SimplifyExpr (tree_t* expr, node_t* node)
     //right
     node->right =  SimplifyExpr (expr, node->right);
     return node;
+}
+
+bool IsNotConstExpression (tree_t* expr, node_t* crnt_node)
+{
+    if (!crnt_node->left)
+    {
+        if (crnt_node->value == 'x')
+            return true;
+        else
+            return false;
+    }
+
+    if (IsNotConstExpression (expr, crnt_node->left))
+    {
+        return true;
+    }
+
+    if (IsNotConstExpression (expr, crnt_node->right))
+    {
+        return true;
+    }
+    return false;
 }
 
 void WriterTexExpression (tree_t* expr)
@@ -199,7 +223,7 @@ double Evaluate (node_t* node)
     if (node->type == NUM)
         return node->value;
     if (node->type == VAR)
-        return INFINITY;
+        return GLOBALX;
     if (node->type == OP)
     {
         if (node->value == ADD)

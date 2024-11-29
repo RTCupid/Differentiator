@@ -82,15 +82,15 @@ void PrintNodeDot (FILE* dot_file, node_t* node)
 {
     if (node->type == OP)
     {
-        fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#aed6dc\"; label =  \"%c \" ];\n", node, node->value);
+        fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#aed6dc\"; label =  \"%c \" ];\n", node, (int)node->value);
     }
     if (node->type == NUM)
     {
-        fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#ff9a8d\"; label =  \"%d \" ];\n", node, node->value);
+        fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#ff9a8d\"; label =  \"%f \" ];\n", node, node->value);
     }
     if (node->type == VAR)
     {
-        fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#4a536b\"; label =  \"%c \" ];\n", node, node->value);
+        fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#4a536b\"; label =  \"%c \" ];\n", node, (int)node->value);
     }
 }
 
@@ -156,13 +156,13 @@ void PrintNodeDumpDot (FILE* dot_file, node_t* node)
     {
         fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#aed6dc\"; "
             "label =  \"{node: %p | value: %c | type: OP | {<left>left: %p | <right>right: %p}  }\" ];\n",
-            node, node, node->value,  node->left, node->right);
+            node, node, (int)node->value,  node->left, node->right);
         //fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#aed6dc\"; label =  \"%c \" ];\n", node, node->value);
     }
     if (node->type == NUM)
     {
         fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#ff9a8d\"; "
-            "label =  \"{node: %p | value: %d | type: NUM | {<left>left: %p | <right>right: %p}  }\" ];\n",
+            "label =  \"{node: %p | value: %f | type: NUM | {<left>left: %p | <right>right: %p}  }\" ];\n",
             node, node, node->value,  node->left, node->right);
 
         //fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#ff9a8d\"; label =  \"%d \" ];\n", node, node->value);
@@ -171,7 +171,7 @@ void PrintNodeDumpDot (FILE* dot_file, node_t* node)
     {
         fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#4a536b\"; "
             "label =  \"{node: %p | value: %c | type: VAR | {<left>left: %p | <right>right: %p}  }\" ];\n",
-            node, node, node->value,  node->left, node->right);
+            node, node, (int)node->value,  node->left, node->right);
 
         //fprintf (dot_file, "\t node%p [shape=Mrecord; style=filled; color=\"#4a536b\"; label =  \"%c \" ];\n", node, node->value);
     }
