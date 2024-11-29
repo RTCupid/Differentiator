@@ -44,6 +44,10 @@ node_t* Differentiator (tree_t* expr, node_t* node)
             {
                 return NewNode (OP, ADD, Differentiator (expr, node->left), Differentiator (expr, node->right));
             }
+            case SUB:
+            {
+                return NewNode (OP, SUB, Differentiator (expr, node->left), Differentiator (expr, node->right));
+            }
             default:
             {
                 assert (0);

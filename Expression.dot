@@ -1,7 +1,7 @@
 digraph G {
 	rankdir = HR;
 	bgcolor="#F7F9FB"
-	 node0x503000000130 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "+ " ];
+	 node0x503000000130 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "- " ];
 	 node0x503000000130 -> node0x503000000100 [ style=bold; weight=1000; ];
 	 node0x503000000130 -> node0x5030000000d0 [ style=bold; weight=1000; ];
 	 node0x503000000100 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "0 " ];
