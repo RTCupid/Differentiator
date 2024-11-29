@@ -42,32 +42,25 @@ node_t* Differentiator (tree_t* expr, node_t* node)
     }
     if (node->type == OP)
     {
-        switch (node->value)
+        if (node->value == ADD)
         {
-            case ADD:
-            {
-                return NewNode (OP, ADD, Differentiator (expr, node->left), Differentiator (expr, node->right));
-            }
-            case SUB:
-            {
-                return NewNode (OP, SUB, Differentiator (expr, node->left), Differentiator (expr, node->right));
-            }
-            case MUL:
-            {
-                return NewNode (OP, ADD,
-                                NewNode (OP, MUL, Differentiator (expr, node->left), Copy (node->right)),
-                                NewNode (OP, MUL, Copy (node->left), Differentiator (expr, node->right)));
-            }
-            case DIV:
-            {
-                return NewNode (OP, DIV, NewNode (OP, SUB, NewNode (OP, MUL, Differentiator (expr, node->left), Copy (node->right)),
-                                                           NewNode (OP, MUL, Copy (node->left), Differentiator (expr, node->right))),
-                                         NewNode (OP, MUL, Copy (node->right), Copy (node->right)));
-            }
-            default:
-            {
-                assert (0);
-            }
+            return NewNode (OP, ADD, Differentiator (expr, node->left), Differentiator (expr, node->right));
+        }
+        if (node->value == SUB)
+        {
+            return NewNode (OP, SUB, Differentiator (expr, node->left), Differentiator (expr, node->right));
+        }
+        if (node->value == MUL)
+        {
+            return NewNode (OP, ADD,
+                            NewNode (OP, MUL, Differentiator (expr, node->left), Copy (node->right)),
+                            NewNode (OP, MUL, Copy (node->left), Differentiator (expr, node->right)));
+        }
+        if (node->value == DIV)
+        {
+            return NewNode (OP, DIV, NewNode (OP, SUB, NewNode (OP, MUL, Differentiator (expr, node->left), Copy (node->right)),
+                                                        NewNode (OP, MUL, Copy (node->left), Differentiator (expr, node->right))),
+                                        NewNode (OP, MUL, Copy (node->right), Copy (node->right)));
         }
     }
     fprintf (expr->dbg_log_file, "ERROR: unknown type\n");
@@ -83,6 +76,35 @@ node_t* Copy (node_t* old_node)
     return NewNode (old_node->type, old_node->value, Copy (old_node->left), Copy (old_node->right));
 }
 
+node_t* SimplifyExpr (tree_t* expr, node_t* node)
+{
+    if (node->type == NUM)
+    {
+        printf ("node_value = %f\n", node->value);
+    }
+    else
+    {
+        printf ("node_value = %c\n", (int)node->value);
+    }
+
+    if (node->left == NULL)
+    {
+        return node;
+    }
+
+    if (isfinite (Evaluate (node)))
+    {
+        node_t* new_node = NewNode (NUM, Evaluate (node), NULL, NULL);
+        ClearTree (node);
+        return new_node;
+    }
+
+    //left
+    node->left  = SimplifyExpr (expr, node->left );
+    //right
+    node->right =  SimplifyExpr (expr, node->right);
+    return node;
+}
 
 void WriterTexExpression (tree_t* expr)
 {
@@ -134,8 +156,8 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
             /*...left...*/
             RecursiveWriteExpression (expr, node->left);
 
-            fprintf (expr->tex_file, "%c", node->value);
-            fprintf (expr->dbg_log_file, "%c", node->value);
+            fprintf (expr->tex_file, "%c", (int)node->value);
+            fprintf (expr->dbg_log_file, "%c", (int)node->value);
 
             /*...right...*/
             RecursiveWriteExpression (expr, node->right);
@@ -146,8 +168,8 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
             fprintf (expr->tex_file, "(");
             RecursiveWriteExpression (expr, node->left);
 
-            fprintf (expr->tex_file, "%c", node->value);
-            fprintf (expr->dbg_log_file, "%c", node->value);
+            fprintf (expr->tex_file, "%c", (int)node->value);
+            fprintf (expr->dbg_log_file, "%c", (int)node->value);
 
             /*...right...*/
             RecursiveWriteExpression (expr, node->right);
@@ -156,14 +178,14 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
     }
     else if (node->type == NUM)
     {
-        fprintf (expr->tex_file, "%d", node->value);
-        fprintf (expr->dbg_log_file, "%d", node->value);
+        fprintf (expr->tex_file, "%f", node->value);
+        fprintf (expr->dbg_log_file, "%f", node->value);
         return;
     }
     else if (node->type == VAR)
     {
-        fprintf (expr->tex_file, "%c", node->value);
-        fprintf (expr->dbg_log_file, "%c", node->value);
+        fprintf (expr->tex_file, "%c", (int)node->value);
+        fprintf (expr->dbg_log_file, "%c", (int)node->value);
         return;
     }
     else
@@ -180,34 +202,27 @@ double Evaluate (node_t* node)
         return INFINITY;
     if (node->type == OP)
     {
-        switch (node->value)
+        if (node->value == ADD)
         {
-            case ADD:
-            {
-                return Evaluate (node->left) + Evaluate (node->right);
-            }
-            case SUB:
-            {
-                return Evaluate (node->left) - Evaluate (node->right);
-            }
-            case MUL:
-            {
-                return Evaluate (node->left) * Evaluate (node->right);
-            }
-            case DIV:
-            {
-                return Evaluate (node->left) / Evaluate (node->right);
-            }
-            default:
-            {
-                printf ("ERROR: unknown operation %d = <%c>\n", node->value, node->value);
-            }
+            return Evaluate (node->left) + Evaluate (node->right);
+        }
+        if (node->value == SUB)
+        {
+            return Evaluate (node->left) - Evaluate (node->right);
+        }
+        if (node->value == MUL)
+        {
+            return Evaluate (node->left) * Evaluate (node->right);
+        }
+        if (node->value == DIV)
+        {
+            return Evaluate (node->left) / Evaluate (node->right);
         }
     }
     return ERROR_EVALUATE;
 }
 
-node_t* NewNode (size_t type, int value, node_t* left, node_t* right)
+node_t* NewNode (size_t type, double value, node_t* left, node_t* right)
 {
     node_t* node = (node_t*) calloc (1, sizeof (*node));
 

@@ -36,6 +36,8 @@ int main ()
     printf ("expression : <%s>\n", expr.data);
 
     expr.diff = Differentiator (&expr, expr.root);
+    printf ("differentiator completed\n");
+    expr.diff = SimplifyExpr (&expr, expr.diff);
 
     //printf ("Answer = %lf\n", Evaluate (expr.root));
 

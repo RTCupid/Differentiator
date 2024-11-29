@@ -38,7 +38,7 @@
     typedef struct node_t
     {
     size_t type;
-    int value;
+    double value;
     node_t* left;
     node_t* right;
     } node_t;
@@ -61,7 +61,7 @@
 
     node_t*     Differentiator              (tree_t* expr, node_t* node);
 
-
+    node_t*     SimplifyExpr                (tree_t* expr, node_t* node);
 
     node_t*     Copy                        (node_t* old_node);
 
@@ -73,7 +73,7 @@
 
     void        ClearTree                   (node_t* node);
 
-    node_t*     NewNode                     (size_t type, int value, node_t* left, node_t* right);
+    node_t*     NewNode                     (size_t type, double value, node_t* left, node_t* right);
 
     double      Evaluate                    (node_t* node);
 
