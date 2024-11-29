@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 
 #include "Differentiator.h"
 #include "DiffDump.h"
 #include "DiffVerificator.h"
 #include "ReadExpression.h"
 
-static double GLOBALX = 0;
+//static double GLOBALX = 0;
 
 errExpr_t ExpressionCtor (tree_t* expr)
 {
@@ -176,7 +177,7 @@ double Evaluate (node_t* node)
     if (node->type == NUM)
         return node->value;
     if (node->type == VAR)
-        return GLOBALX;
+        return INFINITY;
     if (node->type == OP)
     {
         switch (node->value)

@@ -19,14 +19,14 @@
         DIFF,
     };
 
-    enum types
+    enum types_t
     {
         OP,
         NUM,
         VAR,
     };
 
-    enum OP
+    enum OP_t
     {
         EQU = '=',
         ADD = '+',
@@ -60,6 +60,8 @@
     errExpr_t   ExpressionCtor              (tree_t* expr);
 
     node_t*     Differentiator              (tree_t* expr, node_t* node);
+
+
 
     node_t*     Copy                        (node_t* old_node);
 
