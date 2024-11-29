@@ -25,6 +25,27 @@ errExpr_t ExpressionCtor (tree_t* expr)
     return EXPR_OK;
 }
 
+node_t* Differentiator (tree_t* expr, node_t* node)
+{
+    if (node->type == NUM)
+    {
+        return NewNode (NUM, 0, NULL, NULL);
+    }
+    if (node->type == VAR)
+    {
+        return NewNode (NUM, 1, NULL, NULL);
+    }
+    if (node->type == OP)
+    {
+        // switch (node->value)
+        // {
+        //     case
+        // }
+    }
+
+}
+
+
 void WriterTexExpression (tree_t* expr)
 {
     expr->tex_file = fopen ("Expression.tex", "wt");

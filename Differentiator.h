@@ -23,8 +23,8 @@
     enum OP
     {
         EQU = '=',
-        ADD = '%',
-        SUB = '&',
+        ADD = '+',
+        SUB = '-',
         MUL = '*',
         DIV = '/',
     };
@@ -51,6 +51,8 @@
 //--ret-value----function--------------------argument-------------------------------------------------------------
 
     errExpr_t   ExpressionCtor              (tree_t* expr);
+
+    node_t* Differentiator (tree_t* expr, node_t* node);
 
     void        WriterTexExpression         (tree_t* expr);
 
