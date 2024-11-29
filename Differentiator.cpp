@@ -80,15 +80,67 @@ node_t* Copy (node_t* old_node)
 
 node_t* SimplifyExpr (tree_t* expr, node_t* node)
 {
-    if (node->type == NUM)
+    int n_change_elems = 1;
+    while (n_change_elems != 0)
     {
-        printf ("node_value = %f\n", node->value);
+        n_change_elems = 0;
+        node = SimplifyConstExpr (expr, node, &n_change_elems);
+        printf ("n_change_elems const expr = %d\n", n_change_elems);
+        node = RemoveNeutralExpr (expr, node, &n_change_elems);
     }
-    else
-    {
-        printf ("node_value = %c\n", (int)node->value);
-    }
+    return node;
+}
 
+node_t* RemoveNeutralExpr (tree_t* expr, node_t* crnt_node, int* n_change_elems)
+{
+    if (crnt_node == NULL)
+    {
+        return NULL;
+    }
+    if (crnt_node->type == OP)
+    {
+        if (crnt_node->value == ADD || crnt_node->value == SUB)
+        {
+            if (crnt_node->left->value == 0)
+            {
+                *n_change_elems += 1;
+                return crnt_node->right;
+            }
+            if (crnt_node->right->value == 0)
+            {
+                *n_change_elems += 1;
+                return crnt_node->left;
+            }
+        }
+
+        if (crnt_node->value == MUL)
+        {
+            if (crnt_node->left->value == 1)
+            {
+                *n_change_elems += 1;
+                return crnt_node->right;
+            }
+            if (crnt_node->right->value == 1)
+            {
+                *n_change_elems += 1;
+                return crnt_node->left;
+            }
+            if (crnt_node->left->value == 0 || crnt_node->right->value == 0)
+            {
+                ClearTree (crnt_node);
+                *n_change_elems += 1;
+                return NewNode (NUM, 0, NULL, NULL);
+            }
+        }
+
+        crnt_node->left  = RemoveNeutralExpr (expr, crnt_node->left, n_change_elems);
+        crnt_node->right = RemoveNeutralExpr (expr, crnt_node->right, n_change_elems);
+    }
+    return crnt_node;
+}
+
+node_t* SimplifyConstExpr (tree_t* expr, node_t* node, int* n_change_elems)
+{
     if (node->left == NULL)
     {
         return node;
@@ -98,13 +150,14 @@ node_t* SimplifyExpr (tree_t* expr, node_t* node)
     {
         node_t* new_node = NewNode (NUM, Evaluate (node), NULL, NULL);
         ClearTree (node);
+        *n_change_elems += 1;
         return new_node;
     }
 
     //left
-    node->left  = SimplifyExpr (expr, node->left );
+    node->left  = SimplifyConstExpr (expr, node->left, n_change_elems );
     //right
-    node->right =  SimplifyExpr (expr, node->right);
+    node->right = SimplifyConstExpr (expr, node->right, n_change_elems);
     return node;
 }
 

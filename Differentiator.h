@@ -63,6 +63,10 @@
 
     node_t*     SimplifyExpr                (tree_t* expr, node_t* node);
 
+    node_t*     SimplifyConstExpr           (tree_t* expr, node_t* node, int* n_change_elems);
+
+    node_t*     RemoveNeutralExpr           (tree_t* expr, node_t* node, int* n_change_elems);
+
     bool        IsNotConstExpression        (tree_t* expr, node_t* node);
 
     node_t*     Copy                        (node_t* old_node);
