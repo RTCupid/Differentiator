@@ -3,9 +3,9 @@
 
 //--ret-value---function-------------argument------------------------------------------------------
 
-    void    DifferentiatorGraphviz  (tree_t* expr);
+    void    DifferentiatorGraphviz  (tree_t* expr, mode_graph_t mode);
 
-    void    MakeDotFileGraphviz     (tree_t* expr);
+    void    MakeDotFileGraphviz     (tree_t* expr, mode_graph_t mode);
 
     void    PrintGraphviz           (tree_t expr, node_t* node, FILE* dot_file);
 

@@ -15,8 +15,8 @@ int main ()
 
     printf ("%% - plus\n& - minus\n");
     printf ("EQU = '='  = <%d>\n"
-            "ADD = '%%'  = <%d>\n"
-            "SUB = '&'  = <%d>\n"
+            "ADD = '+'  = <%d>\n"
+            "SUB = '-'  = <%d>\n"
             "MUL = '*'  = <%d>\n"
             "DIV = '/'  = <%d>\n"
             "    = '('  = <%d>\n"
@@ -34,9 +34,12 @@ int main ()
     printf ("offset = %d\n", offset);
 
     printf ("expression : <%s>\n", expr.data);
+
+    expr.diff = Differentiator (&expr, expr.root);
+
     //printf ("Answer = %lf\n", Evaluate (expr.root));
 
-    DifferentiatorGraphviz (&expr);
+    DifferentiatorGraphviz (&expr, DIFF);
 
     //DiffDump (&expr);
 

@@ -7,14 +7,14 @@
 
 //-----------------------------------------------TREE-------------------------------------------------------------
 
-void DifferentiatorGraphviz (tree_t* expr)
+void DifferentiatorGraphviz (tree_t* expr, mode_graph_t mode)
 {
     expr->log_file = fopen ("log_file.htm", "wt");
     VerifyOpenFile (expr->log_file, "DifferentiatorGraphviz");
 
     fprintf (expr->log_file, "<FONT SIZE=\"6\"><center>My Differentiator:</center><FONT SIZE=\"5\">\n\n");
 
-    MakeDotFileGraphviz (expr);
+    MakeDotFileGraphviz (expr, mode);
 
     system ("dot -Tpng Expression.dot -o Expression.png");
 
@@ -23,7 +23,7 @@ void DifferentiatorGraphviz (tree_t* expr)
     fclose (expr->log_file);
 }
 
-void MakeDotFileGraphviz (tree_t* expr)
+void MakeDotFileGraphviz (tree_t* expr, mode_graph_t mode)
 {
     FILE* dot_file = fopen ("Expression.dot", "wt");
     VerifyOpenFile (dot_file, "MakeDotFileGraphviz");
@@ -32,7 +32,14 @@ void MakeDotFileGraphviz (tree_t* expr)
     fprintf (dot_file, "\trankdir = HR;\n");
     fprintf (dot_file, "\tbgcolor=\"#F7F9FB\"\n");
 
-    PrintGraphviz (*expr, expr->root, dot_file);
+    if (mode == EXPR)
+    {
+        PrintGraphviz (*expr, expr->root, dot_file);
+    }
+    else if (mode == DIFF)
+    {
+        PrintGraphviz (*expr, expr->diff, dot_file);
+    }
 
     fprintf (dot_file, "}\n");
     fclose (dot_file);

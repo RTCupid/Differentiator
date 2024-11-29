@@ -13,6 +13,12 @@
         ERROR_EVALUATE = -52,
     };
 
+    enum mode_graph_t
+    {
+        EXPR,
+        DIFF,
+    };
+
     enum types
     {
         OP,
@@ -46,13 +52,14 @@
     FILE* log_file;
     FILE* dbg_log_file;
     FILE* tex_file;
+    node_t* diff;
     } tree_t;
 
 //--ret-value----function--------------------argument-------------------------------------------------------------
 
     errExpr_t   ExpressionCtor              (tree_t* expr);
 
-    node_t* Differentiator (tree_t* expr, node_t* node);
+    node_t*     Differentiator (tree_t* expr, node_t* node);
 
     void        WriterTexExpression         (tree_t* expr);
 

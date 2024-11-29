@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "Differentiator.h"
 #include "DiffDump.h"
@@ -37,11 +38,19 @@ node_t* Differentiator (tree_t* expr, node_t* node)
     }
     if (node->type == OP)
     {
-        // switch (node->value)
-        // {
-        //     case
-        // }
+        switch (node->value)
+        {
+            case ADD:
+            {
+                return NewNode (OP, ADD, Differentiator (expr, node->left), Differentiator (expr, node->right));
+            }
+            default:
+            {
+                assert (0);
+            }
+        }
     }
+    return NULL;
 
 }
 
@@ -164,6 +173,8 @@ void ExpressionDtor (tree_t* expr)
     fclose (expr->dbg_log_file);
 
     ClearTree (expr->root);
+
+    ClearTree (expr->diff);
 
     free (expr->data);
     expr->data = 0;
