@@ -104,12 +104,26 @@ node_t* RemoveNeutralExpr (tree_t* expr, node_t* crnt_node, int* n_change_elems)
             if (crnt_node->left->value == 0)
             {
                 *n_change_elems += 1;
-                return crnt_node->right;
+                node_t* ret_node = crnt_node->right;
+
+                free (crnt_node->left);
+                crnt_node->left = NULL;
+                free (crnt_node);
+                crnt_node = NULL;
+
+                return ret_node;
             }
             if (crnt_node->right->value == 0)
             {
                 *n_change_elems += 1;
-                return crnt_node->left;
+                node_t* ret_node = crnt_node->left;
+
+                free (crnt_node->right);
+                crnt_node->right = NULL;
+                free (crnt_node);
+                crnt_node = NULL;
+
+                return ret_node;
             }
         }
 
@@ -118,12 +132,26 @@ node_t* RemoveNeutralExpr (tree_t* expr, node_t* crnt_node, int* n_change_elems)
             if (crnt_node->left->value == 1)
             {
                 *n_change_elems += 1;
-                return crnt_node->right;
+                node_t* ret_node = crnt_node->right;
+
+                free (crnt_node->left);
+                crnt_node->left = NULL;
+                free (crnt_node);
+                crnt_node = NULL;
+
+                return ret_node;
             }
             if (crnt_node->right->value == 1)
             {
                 *n_change_elems += 1;
-                return crnt_node->left;
+                node_t* ret_node = crnt_node->left;
+
+                free (crnt_node->right);
+                crnt_node->right = NULL;
+                free (crnt_node);
+                crnt_node = NULL;
+
+                return ret_node;
             }
             if (crnt_node->left->value == 0 || crnt_node->right->value == 0)
             {
@@ -255,8 +283,16 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
     }
     else if (node->type == NUM)
     {
-        fprintf (expr->tex_file, "%f", node->value);
-        fprintf (expr->dbg_log_file, "%f", node->value);
+        if (node->value < 0)
+        {
+            fprintf (expr->tex_file, "\\left(%f\\right)", node->value);
+            fprintf (expr->dbg_log_file, "(%f)", node->value);
+        }
+        else
+        {
+            fprintf (expr->tex_file, "%f", node->value);
+            fprintf (expr->dbg_log_file, "%f", node->value);
+        }
         return;
     }
     else if (node->type == VAR)
