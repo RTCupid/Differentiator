@@ -9,18 +9,25 @@
 
 void DifferentiatorGraphviz (tree_t* expr, mode_graph_t mode)
 {
-    expr->log_file = fopen ("log_file.htm", "wt");
-    VerifyOpenFile (expr->log_file, "DifferentiatorGraphviz");
-
-    fprintf (expr->log_file, "<FONT SIZE=\"6\"><center>My Differentiator:</center><FONT SIZE=\"5\">\n\n");
+    if (mode == EXPR)
+        fprintf (expr->log_file, "<FONT SIZE=\"6\"><center>My Differentiator: expression</center><FONT SIZE=\"5\">\n\n");
+    else
+        fprintf (expr->log_file, "<FONT SIZE=\"6\"><center>My Differentiator: differential</center><FONT SIZE=\"5\">\n\n");
 
     MakeDotFileGraphviz (expr, mode);
 
-    system ("dot -Tpng Expression.dot -o Expression.png");
+    static int numpng = 111;
 
-    fprintf (expr->log_file, "<center><img src = Expression.png ></center>\n\n");
+    char namepng[4] = {};
+    sprintf (namepng, "%d", numpng);
+    numpng++;
+    char systemCall[100] = {};
+    sprintf (systemCall,"dot -Tpng Expression.dot -o %s.png", namepng);
+    //printf ("systemCall = <<%s>>\n", systemCall);
 
-    fclose (expr->log_file);
+    system (systemCall);
+
+    fprintf (expr->log_file, "<center><img src = %s.png ></center>\n\n", namepng);
 }
 
 void MakeDotFileGraphviz (tree_t* expr, mode_graph_t mode)

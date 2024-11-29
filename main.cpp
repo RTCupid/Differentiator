@@ -39,6 +39,8 @@ int main ()
 
     //printf ("Answer = %lf\n", Evaluate (expr.root));
 
+    DifferentiatorGraphviz (&expr, EXPR);
+
     DifferentiatorGraphviz (&expr, DIFF);
 
     //DiffDump (&expr);

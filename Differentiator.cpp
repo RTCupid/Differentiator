@@ -14,6 +14,9 @@ errExpr_t ExpressionCtor (tree_t* expr)
     expr->dbg_log_file = fopen ("dbg_log_file.txt", "wt");
     VerifyOpenFile (expr->dbg_log_file, "AkinatorCtor");
 
+    expr->log_file = fopen ("log_file.htm", "wt");
+    VerifyOpenFile (expr->log_file, "AkinatorCtor");
+
     expr->crnt_node = NULL;
 
     InputExpression (expr);
@@ -218,6 +221,7 @@ node_t* NewNode (size_t type, int value, node_t* left, node_t* right)
 void ExpressionDtor (tree_t* expr)
 {
     fclose (expr->dbg_log_file);
+    fclose (expr->log_file);
 
     ClearTree (expr->root);
 
