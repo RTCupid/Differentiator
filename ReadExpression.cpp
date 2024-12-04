@@ -216,7 +216,9 @@ void InputExpression (tree_t* expr)
 size_t NodeType (tree_t* expr, int value)
  {
     fprintf (expr->dbg_log_file, "In NodeType value = %d\n", value);
-    if (value == EQU || value == ADD || value == SUB || value == MUL || value == DIV || value == DEG || value == SIN || value == COS)
+    if (value == EQU || value == ADD || value == SUB || value == MUL ||
+        value == DIV || value == DEG || value == SIN || value == COS ||
+        value == LN)
         return OP;
     if (value == 'x')
         return VAR;

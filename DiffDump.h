@@ -11,9 +11,9 @@
 
     void    PrintNodeDot            (FILE* dot_file, node_t* node);
 
-    void    DiffDump                (tree_t* tree);
+    void    DiffDump                (tree_t* tree, mode_graph_t mode);
 
-    void    MakeDotFileDump         (tree_t* tree);
+    void    MakeDotFileDump         (tree_t* tree, mode_graph_t mode);
 
     void    PrintDump               (tree_t tree, node_t* node, FILE* dot_file);
 

@@ -69,19 +69,39 @@ node_t* Differentiator (tree_t* expr, node_t* node)
         if (node->value == SIN)
         {
             return _MUL(
-                        _COS(Copy (node->left), NULL),
+                        _COS(Copy (node->left)),
                         Differentiator (expr, node->left));
         }
         if (node->value == COS)
         {
             return _MUL(
-                        _SIN(Copy (node->left), NULL),
+                        _SIN(Copy (node->left)),
+                        Differentiator (expr, node->left));
+        }
+        if (node->value == LN)
+        {
+            return _MUL(
+                        _DIV(_NUM(1), Copy (node->left)),
                         Differentiator (expr, node->left));
         }
         if (node->value == DEG)
         {
             printf ("node->value = DEG\n");
-            if (IsNotConstExpression (expr, node->left) && !IsNotConstExpression (expr, node->right))
+            node_t* node_degree = _MUL(
+                                    _LN(Copy (node->left)),
+                                    Copy(node->right));
+            node_t* new_node = _MUL(
+                                Copy (node),
+                                Differentiator (expr, node_degree));
+
+            //printf ("\n\nnode_degree = %p\n\n", node_degree);
+            ClearTree (node_degree);
+            //printf ("\n\nnode_degree = %p\n\n", node_degree);
+
+            return new_node;
+
+
+            /*if (IsNotConstExpression (expr, node->left) && !IsNotConstExpression (expr, node->right))
             {
                 printf ("is degree\n");
                 return _MUL(
@@ -106,7 +126,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
 //             if (!IsNotConstExpression (expr, node->left) && !IsNotConstExpression (expr, node->right))
 //             {
 //
-//             }
+//             }*/
         }
     }
     fprintf (expr->dbg_log_file, "ERROR: unknown type\n");

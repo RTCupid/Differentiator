@@ -8,8 +8,9 @@
     #define _SUB(L,R)   NewNode(OP, SUB, L, R)
     #define _MUL(L,R)   NewNode(OP, MUL, L, R)
     #define _DIV(L,R)   NewNode(OP, DIV, L, R)
-    #define _SIN(L,R)   NewNode(OP, SIN, L, R)
-    #define _COS(L,R)   NewNode(OP, COS, L, R)
-    #define  _LN(L,R)   NewNode(OP, LN,  L, R)
     #define _DEG(L,R)   NewNode(OP, DEG, L, R)
+    #define _SIN(L)     NewNode(OP, SIN, L, NULL)
+    #define _COS(L)     NewNode(OP, COS, L, NULL)
+    #define  _LN(L)     NewNode(OP, LN,  L, NULL)
+
 #endif

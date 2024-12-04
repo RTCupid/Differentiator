@@ -44,11 +44,13 @@ int main ()
 
     expr.diff = SimplifyExpr (&expr, expr.diff);
 
-    DiffDump (&expr);
+    DiffDump (&expr, EXPR);
 
     DifferentiatorGraphviz (&expr, EXPR);
 
     DifferentiatorGraphviz (&expr, DIFF);
+
+    DiffDump (&expr, DIFF);
 
     WriterTexExpression (&expr);
 

@@ -96,18 +96,32 @@ void PrintNodeDot (FILE* dot_file, node_t* node)
 
 //-----------------------------------------------DUMP-------------------------------------------------------------
 
-void DiffDump (tree_t* tree)
+void DiffDump (tree_t* tree, mode_graph_t mode)
 {
     fprintf (tree->log_file, "<FONT SIZE=\"6\"><center>Dump Differentiator!:</center><FONT SIZE=\"5\">\n\n");
 
-    MakeDotFileDump (tree);
+    MakeDotFileDump (tree, mode);
 
-    system ("dot -Tpng DiffDump.dot -o DiffDump.png");
+    static int numpng = 1111;
 
-    fprintf (tree->log_file, "<center><img src = DiffDump.png ></center>\n\n");
+    char namepng[5] = {};
+    sprintf (namepng, "%d", numpng);
+    numpng++;
+    char systemCall[100] = {};
+    sprintf (systemCall,"dot -Tpng DiffDump.dot -o %s.png", namepng);
+    //printf ("systemCall = <<%s>>\n", systemCall);
+
+    system (systemCall);
+
+    fprintf (tree->log_file, "<center><img src = %s.png ></center>\n\n", namepng);
+
+    //system (systemCall);
+    //system ("dot -Tpng DiffDump.dot -o DiffDump.png");
+
+    //fprintf (tree->log_file, "<center><img src = DiffDump.png ></center>\n\n");
 }
 
-void MakeDotFileDump (tree_t* tree)
+void MakeDotFileDump (tree_t* tree, mode_graph_t mode)
 {
     FILE* dot_file = fopen ("DiffDump.dot", "wt");
 
@@ -115,7 +129,14 @@ void MakeDotFileDump (tree_t* tree)
     fprintf (dot_file, "\trankdir = HR;\n");
     fprintf (dot_file, "\tbgcolor=\"#F7F9FB\"\n");
 
-    PrintDump (*tree, tree->root, dot_file);
+    if (mode == EXPR)
+    {
+        PrintDump (*tree, tree->root, dot_file);
+    }
+    if (mode == DIFF)
+    {
+        PrintDump (*tree, tree->diff, dot_file);
+    }
 
     fprintf (dot_file, "}\n");
     fclose (dot_file);
