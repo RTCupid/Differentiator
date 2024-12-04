@@ -284,6 +284,13 @@ void WriterTexExpression (tree_t* expr)
                              "\\usepackage[T2A]{fontenc}\n"
                              "\\usepackage[utf8]{inputenc}\n\n");
     fprintf (expr->tex_file, "\\begin{document}\n");
+    fprintf (expr->tex_file, "\t\\begin{center}\n");
+
+    fprintf (expr->tex_file, "\tЛАБОРАТОРНАЯ РАБОТА 3.3.3\n\n");
+    fprintf (expr->tex_file, "\tРешение задачи тысячелетия\n");
+
+    fprintf (expr->tex_file, "\t\\end{center}\n");
+    fprintf (expr->tex_file, "\t\\newpage\n");
     //Expression
     fprintf (expr->tex_file, "\t$\\left(");
 
