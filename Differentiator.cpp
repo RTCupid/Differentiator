@@ -32,7 +32,8 @@ errExpr_t ExpressionCtor (tree_t* expr)
 
 node_t* Differentiator (tree_t* expr, node_t* node)
 {
-    if (node->type == NUM)
+    printf ("Differentiator, node->type = %lu\n", node->type);
+    if (node->type == NUM || !IsNotConstExpression (expr, node))
     {
         return NewNode (NUM, 0, NULL, NULL);
     }
@@ -78,8 +79,10 @@ node_t* Differentiator (tree_t* expr, node_t* node)
         }
         if (node->value == DEG)
         {
+            printf ("node->value = DEG\n");
             if (IsNotConstExpression (expr, node->left) && !IsNotConstExpression (expr, node->right))
             {
+                printf ("is degree\n");
                 return NewNode (OP, MUL,
                         NewNode (OP, MUL,
                             Copy (node->right),
@@ -90,9 +93,23 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                     NewNode (NUM, 1, NULL, NULL)))),
                         Differentiator (expr, node->left));
             }
+            if (!IsNotConstExpression (expr, node->left) && IsNotConstExpression (expr, node->right))
+            {
+                printf ("is exponent\n");
+                return NewNode (OP, MUL,
+                        NewNode (OP, MUL,
+                            Copy (node),
+                            NewNode (OP, LN, Copy (node->left), NULL)),
+                        Differentiator (expr, node->right));
+            }
+//             if (!IsNotConstExpression (expr, node->left) && !IsNotConstExpression (expr, node->right))
+//             {
+//
+//             }
         }
     }
     fprintf (expr->dbg_log_file, "ERROR: unknown type\n");
+    printf ("ERROR: unknown type\n");
     return NULL;
 }
 
@@ -266,6 +283,11 @@ void WriterTexExpression (tree_t* expr)
 
 void RecursiveWriteExpression (tree_t* expr, node_t* node)
 {
+    if (node == NULL)
+    {
+        fprintf (expr->dbg_log_file, "Recursive write expression, node = NULL\n");
+        return;
+    }
     if (node->type == OP)
     {
         if (node->value == DIV)
@@ -317,6 +339,16 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
             RecursiveWriteExpression (expr, node->right);
             fprintf (expr->tex_file, "}");
             fprintf (expr->tex_file, ")");
+        }
+        else if (node->value == LN)
+        {
+            fprintf (expr->tex_file, "ln");
+            fprintf (expr->dbg_log_file, "ln");
+
+            /*...left...*/
+            fprintf (expr->tex_file, "{");
+            RecursiveWriteExpression (expr, node->left);
+            fprintf (expr->tex_file, "}");
         }
         else
         {

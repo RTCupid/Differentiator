@@ -1,15 +1,15 @@
 
-17
-count of char = 17
+12
+count of char = 12
 
-(((x)*(2))^(4))
+((2)-(80))
 
-sizeOfFile = <17>
+sizeOfFile = <12>
 
 
 Reader:
-(((x)*(2))^(4))
-^________________
+((2)-(80))
+^___________
 0123456789
 
 scanf:
@@ -17,8 +17,8 @@ first bracket = <(>
 ID -> 1
 
 Reader:
-(((x)*(2))^(4))
-_^_______________
+((2)-(80))
+_^__________
 0123456789
 
 scanf:
@@ -28,8 +28,8 @@ offset = 0
 ID -> 1
 
 Reader:
-(((x)*(2))^(4))
-_^_______________
+((2)-(80))
+_^__________
 0123456789
 
 scanf:
@@ -38,8 +38,8 @@ ID -> 2
 ID -> 1
 
 Reader:
-(((x)*(2))^(4))
-_^_______________
+((2)-(80))
+_^__________
 0123456789
 
 scanf:
@@ -47,177 +47,86 @@ first bracket = <(>
 ID -> 2
 
 Reader:
-(((x)*(2))^(4))
-__^______________
-0123456789
-
-scanf:
-nsymbols = 0
-offset = 0
-<>
-ID -> 2
-
-Reader:
-(((x)*(2))^(4))
-__^______________
-0123456789
-
-scanf:
-second bracket in func = <(>
-ID -> 3
-ID -> 2
-
-Reader:
-(((x)*(2))^(4))
-__^______________
-0123456789
-
-scanf:
-first bracket = <(>
-ID -> 3
-
-Reader:
-(((x)*(2))^(4))
-___^_____________
-0123456789
-
-scanf:
-nsymbols = 1
-offset = 1
-<x>
-ID -> 4
-
-Reader:
-(((x)*(2))^(4))
-____^____________
-0123456789
-
-scanf:
-second bracket in func = <)>
-ID -> 5
-In NodeType value = 120
-return
-
-
-Reader:
-(((x)*(2))^(4))
-_____^___________
-0123456789
-
-scanf:
-main value = <*>
-ID -> 6
-In NodeType value = 42
-
-Reader:
-(((x)*(2))^(4))
-______^__________
-0123456789
-
-scanf:
-third bracket in func = <(>
-ID -> 7
-ID -> 6
-
-Reader:
-(((x)*(2))^(4))
-______^__________
-0123456789
-
-scanf:
-first bracket = <(>
-ID -> 7
-
-Reader:
-(((x)*(2))^(4))
-_______^_________
+((2)-(80))
+__^_________
 0123456789
 
 scanf:
 nsymbols = 1
 offset = 1
 <2>
-ID -> 8
+ID -> 3
 
 Reader:
-(((x)*(2))^(4))
-________^________
+((2)-(80))
+___^________
 0123456789
 
 scanf:
 second bracket in func = <)>
-ID -> 9
+ID -> 4
 In NodeType value = 2
 return
 
 
 Reader:
-(((x)*(2))^(4))
-__________^______
+((2)-(80))
+____^_______
+0123456789
+
+scanf:
+main value = <->
+ID -> 5
+In NodeType value = 45
+
+Reader:
+((2)-(80))
+_____^______
+0123456789
+
+scanf:
+third bracket in func = <(>
+ID -> 6
+ID -> 5
+
+Reader:
+((2)-(80))
+_____^______
+0123456789
+
+scanf:
+first bracket = <(>
+ID -> 6
+
+Reader:
+((2)-(80))
+______^_____
+0123456789
+
+scanf:
+nsymbols = 1
+offset = 2
+<80>
+ID -> 8
+
+Reader:
+((2)-(80))
+________^___
+0123456789
+
+scanf:
+second bracket in func = <)>
+ID -> 9
+In NodeType value = 80
+return
+
+
+Reader:
+((2)-(80))
+__________^_
 0123456789
 
 scanf:
 end bracket = <)>
 ID -> 10
-
-Reader:
-(((x)*(2))^(4))
-__________^______
-0123456789
-
-scanf:
-main value = <^>
-ID -> 11
-In NodeType value = 94
-
-Reader:
-(((x)*(2))^(4))
-___________^_____
-0123456789
-
-scanf:
-third bracket in func = <(>
-ID -> 12
-ID -> 11
-
-Reader:
-(((x)*(2))^(4))
-___________^_____
-0123456789
-
-scanf:
-first bracket = <(>
-ID -> 12
-
-Reader:
-(((x)*(2))^(4))
-____________^____
-0123456789
-
-scanf:
-nsymbols = 1
-offset = 1
-<4>
-ID -> 13
-
-Reader:
-(((x)*(2))^(4))
-_____________^___
-0123456789
-
-scanf:
-second bracket in func = <)>
-ID -> 14
-In NodeType value = 4
-return
-
-
-Reader:
-(((x)*(2))^(4))
-_______________^_
-0123456789
-
-scanf:
-end bracket = <)>
-ID -> 15
-x*(2.000000)^(4.000000)(4.000000)*x*(2.000000)^(3.000000)*(2.000000)
+(2.000000)-(80.000000)(0.000000)

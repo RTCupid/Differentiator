@@ -36,6 +36,7 @@
         DEG = '^',
         SIN = 's',
         COS = 'c',
+         LN = 'l',
     };
 
     typedef struct node_t
