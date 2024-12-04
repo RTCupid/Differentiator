@@ -62,6 +62,7 @@ node_t* RunExpression (tree_t* expr)
         fprintf (expr->dbg_log_file, "ID -> %d\n", ID);
 
         node_t* new_left = NULL;
+        node_t* new_right = NULL;
         if (bracket == '(')
         {
             ID--;
@@ -78,6 +79,12 @@ node_t* RunExpression (tree_t* expr)
             fprintf (expr->dbg_log_file, "main value = <%c>\n", operation);
             fprintf (expr->dbg_log_file, "ID -> %d\n", ID);
 
+            if (operation == ')')
+            {
+                size_t type = NodeType (expr, buffer[0]);
+                return NewNode (type, buffer[0], new_left, new_right);
+            }
+
             size_t type = NodeType (expr, operation);
 
             /*---RIGHT-ARGUMENT---*/
@@ -88,7 +95,6 @@ node_t* RunExpression (tree_t* expr)
             fprintf (expr->dbg_log_file, "third bracket in func = <%c>\n", bracket);
             fprintf (expr->dbg_log_file, "ID -> %d\n", ID);
 
-            node_t* new_right = NULL;
             if (bracket == '(')
             {
                 //ungetc ('(', base_file);
@@ -96,12 +102,12 @@ node_t* RunExpression (tree_t* expr)
                 fprintf (expr->dbg_log_file, "ID -> %d\n", ID);
 
                 new_right = RunExpression (expr);
+                offset = 0;
+                sscanf (expr->data + ID, "%c%n", &bracket, &offset);
+                ID += offset;
             }
 
             PrintExprDump (expr, ID);
-            offset = 0;
-            sscanf (expr->data + ID, "%c%n", &bracket, &offset);
-            ID += offset;
             fprintf (expr->dbg_log_file, "end bracket = <%c>\n", bracket);
             fprintf (expr->dbg_log_file, "ID -> %d\n", ID);
 
@@ -210,7 +216,7 @@ void InputExpression (tree_t* expr)
 size_t NodeType (tree_t* expr, int value)
  {
     fprintf (expr->dbg_log_file, "In NodeType value = %d\n", value);
-    if (value == EQU || value == ADD || value == SUB || value == MUL || value == DIV)
+    if (value == EQU || value == ADD || value == SUB || value == MUL || value == DIV || value == DEG || value == SIN || value == COS)
         return OP;
     if (value == 'x')
         return VAR;

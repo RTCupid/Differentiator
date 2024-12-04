@@ -98,8 +98,6 @@ void PrintNodeDot (FILE* dot_file, node_t* node)
 
 void DiffDump (tree_t* tree)
 {
-    tree->log_file = fopen ("log_file.htm", "wt");
-
     fprintf (tree->log_file, "<FONT SIZE=\"6\"><center>Dump Differentiator!:</center><FONT SIZE=\"5\">\n\n");
 
     MakeDotFileDump (tree);
@@ -107,8 +105,6 @@ void DiffDump (tree_t* tree)
     system ("dot -Tpng DiffDump.dot -o DiffDump.png");
 
     fprintf (tree->log_file, "<center><img src = DiffDump.png ></center>\n\n");
-
-    fclose (tree->log_file);
 }
 
 void MakeDotFileDump (tree_t* tree)

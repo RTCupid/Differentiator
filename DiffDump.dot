@@ -1,17 +1,13 @@
 digraph G {
 	rankdir = HR;
 	bgcolor="#F7F9FB"
-	 node0x503000000160 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "{node: 0x503000000160 | value: / | type: OP | {<left>left: 0x5030000000a0 | <right>right: 0x503000000130}  }" ];
-	 node0x503000000160:<left> -> node0x5030000000a0 [style=bold; weight=1000; ];
-	 node0x503000000160:<right> -> node0x503000000130 [style=bold; weight=1000; ];
-	 node0x5030000000a0 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "{node: 0x5030000000a0 | value: % | type: OP | {<left>left: 0x503000000040 | <right>right: 0x503000000070}  }" ];
-	 node0x5030000000a0:<left> -> node0x503000000040 [style=bold; weight=1000; ];
-	 node0x5030000000a0:<right> -> node0x503000000070 [style=bold; weight=1000; ];
-	 node0x503000000040 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x503000000040 | value: 30 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
-	 node0x503000000070 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x503000000070 | value: 50 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
-	 node0x503000000130 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "{node: 0x503000000130 | value: & | type: OP | {<left>left: 0x5030000000d0 | <right>right: 0x503000000100}  }" ];
+	 node0x503000000130 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "{node: 0x503000000130 | value: ^ | type: OP | {<left>left: 0x5030000000d0 | <right>right: 0x503000000100}  }" ];
 	 node0x503000000130:<left> -> node0x5030000000d0 [style=bold; weight=1000; ];
 	 node0x503000000130:<right> -> node0x503000000100 [style=bold; weight=1000; ];
-	 node0x5030000000d0 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x5030000000d0 | value: 12 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
-	 node0x503000000100 [shape=Mrecord; style=filled; color="#4a536b"; label =  "{node: 0x503000000100 | value: x | type: VAR | {<left>left: (nil) | <right>right: (nil)}  }" ];
+	 node0x5030000000d0 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "{node: 0x5030000000d0 | value: * | type: OP | {<left>left: 0x503000000070 | <right>right: 0x5030000000a0}  }" ];
+	 node0x5030000000d0:<left> -> node0x503000000070 [style=bold; weight=1000; ];
+	 node0x5030000000d0:<right> -> node0x5030000000a0 [style=bold; weight=1000; ];
+	 node0x503000000070 [shape=Mrecord; style=filled; color="#4a536b"; label =  "{node: 0x503000000070 | value: x | type: VAR | {<left>left: (nil) | <right>right: (nil)}  }" ];
+	 node0x5030000000a0 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x5030000000a0 | value: 2.000000 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
+	 node0x503000000100 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x503000000100 | value: 4.000000 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
 }

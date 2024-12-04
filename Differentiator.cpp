@@ -64,6 +64,33 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                             NewNode (OP, MUL, Copy (node->left), Differentiator (expr, node->right))),
                         NewNode (OP, MUL, Copy (node->right), Copy (node->right)));
         }
+        if (node->value == SIN)
+        {
+            return NewNode (OP, MUL,
+                        NewNode (OP, COS, Copy (node->left), NULL),
+                        Differentiator (expr, node->left));
+        }
+        if (node->value == COS)
+        {
+            return NewNode (OP, MUL,
+                        NewNode (OP, SIN, Copy (node->left), NULL),
+                        Differentiator (expr, node->left));
+        }
+        if (node->value == DEG)
+        {
+            if (IsNotConstExpression (expr, node->left) && !IsNotConstExpression (expr, node->right))
+            {
+                return NewNode (OP, MUL,
+                        NewNode (OP, MUL,
+                            Copy (node->right),
+                            NewNode (OP, DEG,
+                                Copy (node->left),
+                                NewNode (OP, SUB,
+                                    NewNode (NUM, Evaluate (node->right), NULL, NULL),
+                                    NewNode (NUM, 1, NULL, NULL)))),
+                        Differentiator (expr, node->left));
+            }
+        }
     }
     fprintf (expr->dbg_log_file, "ERROR: unknown type\n");
     return NULL;
@@ -169,7 +196,7 @@ node_t* RemoveNeutralExpr (tree_t* expr, node_t* crnt_node, int* n_change_elems)
 
 node_t* SimplifyConstExpr (tree_t* expr, node_t* node, int* n_change_elems)
 {
-    if (node->left == NULL)
+    if (node->left == NULL || node->right == NULL)
     {
         return node;
     }
@@ -256,16 +283,40 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
             fprintf (expr->tex_file, "}");
             fprintf (expr->dbg_log_file, "}");
         }
-        else if (node->value == MUL)
+        else if (node->value == SIN)
+        {
+            fprintf (expr->tex_file, "sin");
+            fprintf (expr->dbg_log_file, "sin");
+
+            /*...left...*/
+            fprintf (expr->tex_file, "{");
+            RecursiveWriteExpression (expr, node->left);
+            fprintf (expr->tex_file, "}");
+        }
+        else if (node->value == COS)
+        {
+            fprintf (expr->tex_file, "cos");
+            fprintf (expr->dbg_log_file, "cos");
+
+            /*...left...*/
+            fprintf (expr->tex_file, "{");
+            RecursiveWriteExpression (expr, node->left);
+            fprintf (expr->tex_file, "}");
+        }
+        else if (node->value == DEG)
         {
             /*...left...*/
+            fprintf (expr->tex_file, "(");
             RecursiveWriteExpression (expr, node->left);
 
             fprintf (expr->tex_file, "%c", (int)node->value);
             fprintf (expr->dbg_log_file, "%c", (int)node->value);
 
             /*...right...*/
+            fprintf (expr->tex_file, "{");
             RecursiveWriteExpression (expr, node->right);
+            fprintf (expr->tex_file, "}");
+            fprintf (expr->tex_file, ")");
         }
         else
         {
@@ -283,16 +334,8 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
     }
     else if (node->type == NUM)
     {
-        if (node->value < 0)
-        {
-            fprintf (expr->tex_file, "\\left(%f\\right)", node->value);
-            fprintf (expr->dbg_log_file, "(%f)", node->value);
-        }
-        else
-        {
-            fprintf (expr->tex_file, "%f", node->value);
-            fprintf (expr->dbg_log_file, "%f", node->value);
-        }
+        fprintf (expr->tex_file, "\\left(%f\\right)", node->value);
+        fprintf (expr->dbg_log_file, "(%f)", node->value);
         return;
     }
     else if (node->type == VAR)
@@ -330,6 +373,18 @@ double Evaluate (node_t* node)
         if (node->value == DIV)
         {
             return Evaluate (node->left) / Evaluate (node->right);
+        }
+        if (node->value == DEG)
+        {
+            return pow (Evaluate (node->left), Evaluate (node->right));
+        }
+        if (node->value == SIN)
+        {
+            return sin (Evaluate (node->left));
+        }
+        if (node->value == COS)
+        {
+            return cos (Evaluate (node->left));
         }
     }
     return ERROR_EVALUATE;

@@ -33,6 +33,9 @@
         SUB = '-',
         MUL = '*',
         DIV = '/',
+        DEG = '^',
+        SIN = 's',
+        COS = 'c',
     };
 
     typedef struct node_t
@@ -82,6 +85,8 @@
     node_t*     NewNode                     (size_t type, double value, node_t* left, node_t* right);
 
     double      Evaluate                    (node_t* node);
+
+    double Exponent (double num, int degree);
 
 //------------------------------------------------------------------------------------------------------------
 

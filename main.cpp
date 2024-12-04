@@ -23,6 +23,8 @@ int main ()
             "    = ')'  = <%d>\n"
             "    = 'x'  = <%d>\n", '=', '%', '&', '*', '/', '(', ')', 'x');
 
+    //printf ("%d\n", 2^2);
+
     tree_t expr = {};
     ExpressionCtor (&expr);
 
@@ -35,18 +37,18 @@ int main ()
 
     printf ("expression : <%s>\n", expr.data);
 
+//     printf ("Answer = %lf\n", Evaluate (expr.root));
+//
     expr.diff = Differentiator (&expr, expr.root);
     printf ("differentiator completed\n");
 
     expr.diff = SimplifyExpr (&expr, expr.diff);
 
-    //printf ("Answer = %lf\n", Evaluate (expr.root));
+    DiffDump (&expr);
 
     DifferentiatorGraphviz (&expr, EXPR);
 
     DifferentiatorGraphviz (&expr, DIFF);
-
-    //DiffDump (&expr);
 
     WriterTexExpression (&expr);
 
