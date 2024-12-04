@@ -7,6 +7,7 @@
 #include "DiffDump.h"
 #include "DiffVerificator.h"
 #include "ReadExpression.h"
+#include "DSL.h"
 
 static double GLOBALX = 0;
 
@@ -35,46 +36,46 @@ node_t* Differentiator (tree_t* expr, node_t* node)
     printf ("Differentiator, node->type = %lu\n", node->type);
     if (node->type == NUM || !IsNotConstExpression (expr, node))
     {
-        return NewNode (NUM, 0, NULL, NULL);
+        return _NUM(0);
     }
     if (node->type == VAR)
     {
-        return NewNode (NUM, 1, NULL, NULL);
+        return _NUM(1);
     }
     if (node->type == OP)
     {
         if (node->value == ADD)
         {
-            return NewNode (OP, ADD, Differentiator (expr, node->left), Differentiator (expr, node->right));
+            return _ADD(Differentiator (expr, node->left), Differentiator (expr, node->right));
         }
         if (node->value == SUB)
         {
-            return NewNode (OP, SUB, Differentiator (expr, node->left), Differentiator (expr, node->right));
+            return _SUB(Differentiator (expr, node->left), Differentiator (expr, node->right));
         }
         if (node->value == MUL)
         {
-            return NewNode (OP, ADD,
-                            NewNode (OP, MUL, Differentiator (expr, node->left), Copy (node->right)),
-                            NewNode (OP, MUL, Copy (node->left), Differentiator (expr, node->right)));
+            return _ADD(
+                        _MUL(Differentiator (expr, node->left), Copy (node->right)),
+                        _MUL(Copy (node->left), Differentiator (expr, node->right)));
         }
         if (node->value == DIV)
         {
-            return NewNode (OP, DIV,
-                        NewNode (OP, SUB,
-                            NewNode (OP, MUL, Differentiator (expr, node->left), Copy (node->right)),
-                            NewNode (OP, MUL, Copy (node->left), Differentiator (expr, node->right))),
-                        NewNode (OP, MUL, Copy (node->right), Copy (node->right)));
+            return _DIV(
+                        _SUB(
+                            _MUL(Differentiator (expr, node->left), Copy (node->right)),
+                            _MUL(Copy (node->left), Differentiator (expr, node->right))),
+                        _MUL(Copy (node->right), Copy (node->right)));
         }
         if (node->value == SIN)
         {
-            return NewNode (OP, MUL,
-                        NewNode (OP, COS, Copy (node->left), NULL),
+            return _MUL(
+                        _COS(Copy (node->left), NULL),
                         Differentiator (expr, node->left));
         }
         if (node->value == COS)
         {
-            return NewNode (OP, MUL,
-                        NewNode (OP, SIN, Copy (node->left), NULL),
+            return _MUL(
+                        _SIN(Copy (node->left), NULL),
                         Differentiator (expr, node->left));
         }
         if (node->value == DEG)
@@ -83,23 +84,23 @@ node_t* Differentiator (tree_t* expr, node_t* node)
             if (IsNotConstExpression (expr, node->left) && !IsNotConstExpression (expr, node->right))
             {
                 printf ("is degree\n");
-                return NewNode (OP, MUL,
-                        NewNode (OP, MUL,
+                return _MUL(
+                        _MUL(
                             Copy (node->right),
-                            NewNode (OP, DEG,
+                            _DEG(
                                 Copy (node->left),
-                                NewNode (OP, SUB,
-                                    NewNode (NUM, Evaluate (node->right), NULL, NULL),
-                                    NewNode (NUM, 1, NULL, NULL)))),
+                                _SUB(
+                                    _NUM(Evaluate (node->right)),
+                                    _NUM(1)))),
                         Differentiator (expr, node->left));
             }
             if (!IsNotConstExpression (expr, node->left) && IsNotConstExpression (expr, node->right))
             {
                 printf ("is exponent\n");
-                return NewNode (OP, MUL,
-                        NewNode (OP, MUL,
+                return _MUL(
+                        _MUL(
                             Copy (node),
-                            NewNode (OP, LN, Copy (node->left), NULL)),
+                            _LN(Copy (node->left), NULL)),
                         Differentiator (expr, node->right));
             }
 //             if (!IsNotConstExpression (expr, node->left) && !IsNotConstExpression (expr, node->right))
