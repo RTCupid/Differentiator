@@ -23,17 +23,8 @@ int main ()
             "    = ')'  = <%d>\n"
             "    = 'x'  = <%d>\n", '=', '%', '&', '*', '/', '(', ')', 'x');
 
-    //printf ("%d\n", 2^2);
-
     tree_t expr = {};
     ExpressionCtor (&expr);
-
-    char array[52] = "(((";
-    char buffer[52] = {};
-    int offset = 0;
-    sscanf (array, "%[^(]%n", buffer, &offset);
-    printf ("buffer = <%s>\n", buffer);
-    printf ("offset = %d\n", offset);
 
     printf ("expression : <%s>\n", expr.data);
 
@@ -41,7 +32,7 @@ int main ()
     DifferentiatorGraphviz (&expr, EXPR);
 
     expr.diff = Differentiator (&expr, expr.root);
-    printf ("differentiator completed\n");
+    printf (GRN "differentiator completed\n" RESET);
 
     /*---Before-Simplify---*/
     DifferentiatorGraphviz (&expr, DIFF);
