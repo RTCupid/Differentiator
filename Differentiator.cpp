@@ -48,71 +48,98 @@ errExpr_t ExpressionCtor (tree_t* expr)
 node_t* Differentiator (tree_t* expr, node_t* node)
 {
     printf ("Differentiator, node->type = %lu\n", node->type);
+
     if (node->type == NUM || !IsNotConstExpression (expr, node))
     {
-        return _NUM(0);
+        node_t* node_diff = _NUM(0);
+        return node_diff;
     }
     if (node->type == VAR)
     {
-        return _NUM(1);
+        node_t* node_diff = _NUM(1);
+        return node_diff;
     }
     if (node->type == OP)
     {
         if (node->value == ADD)
         {
-            return _ADD(Differentiator (expr, node->left), Differentiator (expr, node->right));
+            node_t* node_diff = _ADD(
+                                    Differentiator (expr, node->left),
+                                    Differentiator (expr, node->right));
+            return node_diff;
         }
         if (node->value == SUB)
         {
-            return _SUB(Differentiator (expr, node->left), Differentiator (expr, node->right));
+            node_t* node_diff = _SUB(
+                                    Differentiator (expr, node->left),
+                                    Differentiator (expr, node->right));
+            return node_diff;
         }
         if (node->value == MUL)
         {
-            return _ADD(
-                        _MUL(Differentiator (expr, node->left), Copy (node->right)),
-                        _MUL(Copy (node->left), Differentiator (expr, node->right)));
+            node_t* node_diff = _ADD(
+                                    _MUL(
+                                        Differentiator (expr, node->left),
+                                        Copy (node->right)),
+                                    _MUL(
+                                        Copy (node->left),
+                                        Differentiator (expr, node->right)));
+            return node_diff;
         }
         if (node->value == DIV)
         {
-            return _DIV(
-                        _SUB(
-                            _MUL(Differentiator (expr, node->left), Copy (node->right)),
-                            _MUL(Copy (node->left), Differentiator (expr, node->right))),
-                        _DEG(Copy (node->right), _NUM(2)));
+            node_t* node_diff = _DIV(
+                                    _SUB(
+                                        _MUL(
+                                            Differentiator (expr, node->left),
+                                            Copy (node->right)),
+                                        _MUL(
+                                            Copy (node->left),
+                                            Differentiator (expr, node->right))),
+                                    _DEG(
+                                        Copy (node->right),
+                                        _NUM(2)));
+            return node_diff;
         }
         if (node->value == SIN)
         {
-            return _MUL(
-                        _COS(Copy (node->left)),
-                        Differentiator (expr, node->left));
+            node_t* node_diff = _MUL(
+                                    _COS(
+                                        Copy (node->left)),
+                                    Differentiator (expr, node->left));
+            return node_diff;
         }
         if (node->value == COS)
         {
-            return _MUL(
-                        _SIN(Copy (node->left)),
-                        Differentiator (expr, node->left));
+            node_t* node_diff = _MUL(
+                                    _SIN(
+                                        Copy (node->left)),
+                                    Differentiator (expr, node->left));
+            return node_diff;
         }
         if (node->value == LN)
         {
-            return _MUL(
-                        _DIV(_NUM(1), Copy (node->left)),
-                        Differentiator (expr, node->left));
+            node_t* node_diff = _MUL(
+                                    _DIV(
+                                        _NUM(1),
+                                        Copy (node->left)),
+                                    Differentiator (expr, node->left));
+            return node_diff;
         }
         if (node->value == DEG)
         {
-            printf ("node->value = DEG\n");
             node_t* node_degree = _MUL(
-                                    _LN(Copy (node->left)),
+                                    _LN(
+                                        Copy (node->left)),
                                     Copy(node->right));
-            node_t* new_node = _MUL(
-                                Copy (node),
-                                Differentiator (expr, node_degree));
 
-            //printf ("\n\nnode_degree = %p\n\n", node_degree);
+            node_t* node_diff = _MUL(
+                                    Copy (node),
+                                    Differentiator (expr, node_degree));
+
             ClearTree (node_degree);
-            //printf ("\n\nnode_degree = %p\n\n", node_degree);
 
-            return new_node;
+            return node_diff;
 
 
             /*if (IsNotConstExpression (expr, node->left) && !IsNotConstExpression (expr, node->right))
