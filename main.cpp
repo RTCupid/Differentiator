@@ -37,17 +37,18 @@ int main ()
 
     printf ("expression : <%s>\n", expr.data);
 
-//     printf ("Answer = %lf\n", Evaluate (expr.root));
-//
+    DiffDump (&expr, EXPR);
+    DifferentiatorGraphviz (&expr, EXPR);
+
     expr.diff = Differentiator (&expr, expr.root);
     printf ("differentiator completed\n");
 
+    /*---Before-Simplify---*/
+    DifferentiatorGraphviz (&expr, DIFF);
+
     expr.diff = SimplifyExpr (&expr, expr.diff);
 
-    DiffDump (&expr, EXPR);
-
-    DifferentiatorGraphviz (&expr, EXPR);
-
+    /*---After-Simplify---*/
     DifferentiatorGraphviz (&expr, DIFF);
 
     DiffDump (&expr, DIFF);

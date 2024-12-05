@@ -28,6 +28,19 @@ errExpr_t ExpressionCtor (tree_t* expr)
     printf ("Finish expression construction \n");
     printf ("expr->root = %p\n", expr->root);
 
+    expr->tex_file = fopen ("Expression.tex", "wt");
+    fprintf (expr->tex_file, "\\documentclass[a4paper, 12 pt]{article}\n\n"
+                             "\\usepackage[english, russian]{babel}\n"
+                             "\\usepackage[T2A]{fontenc}\n"
+                             "\\usepackage[utf8]{inputenc}\n\n");
+    fprintf (expr->tex_file, "\\begin{document}\n");
+    fprintf (expr->tex_file, "\t\\begin{center}\n");
+
+    fprintf (expr->tex_file, "\tЛАБОРАТОРНАЯ РАБОТА 3.3.3\n\n");
+    fprintf (expr->tex_file, "\tРешение задачи тысячелетия\n");
+
+    fprintf (expr->tex_file, "\t\\end{center}\n");
+
     return EXPR_OK;
 }
 
@@ -64,7 +77,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                         _SUB(
                             _MUL(Differentiator (expr, node->left), Copy (node->right)),
                             _MUL(Copy (node->left), Differentiator (expr, node->right))),
-                        _MUL(Copy (node->right), Copy (node->right)));
+                        _DEG(Copy (node->right), _NUM(2)));
         }
         if (node->value == SIN)
         {
@@ -256,7 +269,7 @@ node_t* SimplifyConstExpr (tree_t* expr, node_t* node, int* n_change_elems)
 
 bool IsNotConstExpression (tree_t* expr, node_t* crnt_node)
 {
-    if (!crnt_node->left)
+    if (!crnt_node->left || !crnt_node->right)
     {
         if (crnt_node->value == 'x')
             return true;
@@ -278,18 +291,6 @@ bool IsNotConstExpression (tree_t* expr, node_t* crnt_node)
 
 void WriterTexExpression (tree_t* expr)
 {
-    expr->tex_file = fopen ("Expression.tex", "wt");
-    fprintf (expr->tex_file, "\\documentclass[a4paper, 12 pt]{article}\n\n"
-                             "\\usepackage[english, russian]{babel}\n"
-                             "\\usepackage[T2A]{fontenc}\n"
-                             "\\usepackage[utf8]{inputenc}\n\n");
-    fprintf (expr->tex_file, "\\begin{document}\n");
-    fprintf (expr->tex_file, "\t\\begin{center}\n");
-
-    fprintf (expr->tex_file, "\tЛАБОРАТОРНАЯ РАБОТА 3.3.3\n\n");
-    fprintf (expr->tex_file, "\tРешение задачи тысячелетия\n");
-
-    fprintf (expr->tex_file, "\t\\end{center}\n");
     fprintf (expr->tex_file, "\t\\newpage\n");
     //Expression
     fprintf (expr->tex_file, "\t$\\left(");
@@ -306,7 +307,6 @@ void WriterTexExpression (tree_t* expr)
     fprintf (expr->tex_file, "$\n");
 
     fprintf (expr->tex_file, "\n\\end{document}\n");
-    fclose (expr->tex_file);
 }
 
 void RecursiveWriteExpression (tree_t* expr, node_t* node)
@@ -446,6 +446,10 @@ double Evaluate (node_t* node)
         {
             return cos (Evaluate (node->left));
         }
+        if (node->value == LN)
+        {
+            return log (Evaluate (node->left));
+        }
     }
     return ERROR_EVALUATE;
 }
@@ -466,6 +470,7 @@ void ExpressionDtor (tree_t* expr)
 {
     fclose (expr->dbg_log_file);
     fclose (expr->log_file);
+    fclose (expr->tex_file);
 
     ClearTree (expr->root);
 
