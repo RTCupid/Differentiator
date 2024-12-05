@@ -439,6 +439,19 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
             RecursiveWriteExpression (expr, node->left);
             fprintf (expr->tex_file, "}");
         }
+        else if (node->value == MUL)
+        {
+            /*...left...*/
+            fprintf (expr->tex_file, "(");
+            RecursiveWriteExpression (expr, node->left);
+
+            fprintf (expr->tex_file, "{\\cdot}");
+            fprintf (expr->dbg_log_file, "%c", (int)node->value);
+
+            /*...right...*/
+            RecursiveWriteExpression (expr, node->right);
+            fprintf (expr->tex_file, ")");
+        }
         else
         {
             /*...left...*/
