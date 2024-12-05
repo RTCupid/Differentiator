@@ -40,6 +40,7 @@ errExpr_t ExpressionCtor (tree_t* expr)
     fprintf (expr->tex_file, "\tРешение задачи тысячелетия\n");
 
     fprintf (expr->tex_file, "\t\\end{center}\n");
+    fprintf (expr->tex_file, "\t\\newpage\n");
 
     return EXPR_OK;
 }
@@ -289,24 +290,35 @@ bool IsNotConstExpression (tree_t* expr, node_t* crnt_node)
     return false;
 }
 
-void WriterTexExpression (tree_t* expr)
+void WriteExprAndDifferential (tree_t* expr, node_t* node_expr, node_t* node_diff)
 {
-    fprintf (expr->tex_file, "\t\\newpage\n");
-    //Expression
-    fprintf (expr->tex_file, "\t$\\left(");
+    /*---Expression---*/
+    WriteTexExpression (expr, node_expr, EXPR);
 
-    RecursiveWriteExpression (expr, expr->root);
-
-    fprintf (expr->tex_file, "\\right)'$\n");
-
-    //Differential
     fprintf (expr->tex_file, "\t$= ");
 
-    RecursiveWriteExpression (expr, expr->diff);
+    /*---Differential---*/
+    WriteTexExpression (expr, node_diff, DIFF);
+}
 
-    fprintf (expr->tex_file, "$\n");
+void WriteTexExpression (tree_t* expr, node_t* node, my_mode_t mode)
+{
+    if (mode == EXPR)
+    {
+        //Expression
+        fprintf (expr->tex_file, "\t$\\left(");
 
-    fprintf (expr->tex_file, "\n\\end{document}\n");
+        RecursiveWriteExpression (expr, node);
+
+        fprintf (expr->tex_file, "\\right)'$\n");
+    }
+    else if (mode == DIFF)
+    {
+        //Differential
+        RecursiveWriteExpression (expr, node);
+
+        fprintf (expr->tex_file, "$\n");
+    }
 }
 
 void RecursiveWriteExpression (tree_t* expr, node_t* node)
@@ -470,6 +482,8 @@ void ExpressionDtor (tree_t* expr)
 {
     fclose (expr->dbg_log_file);
     fclose (expr->log_file);
+
+    fprintf (expr->tex_file, "\n\\end{document}\n");
     fclose (expr->tex_file);
 
     ClearTree (expr->root);

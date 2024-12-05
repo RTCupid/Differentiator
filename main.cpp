@@ -53,7 +53,7 @@ int main ()
 
     DiffDump (&expr, DIFF);
 
-    WriterTexExpression (&expr);
+    WriteExprAndDifferential (&expr, expr.root, expr.diff);
 
     ExpressionDtor (&expr);
     printf ("End Programm\n");

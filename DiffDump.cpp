@@ -7,7 +7,7 @@
 
 //-----------------------------------------------TREE-------------------------------------------------------------
 
-void DifferentiatorGraphviz (tree_t* expr, mode_graph_t mode)
+void DifferentiatorGraphviz (tree_t* expr, my_mode_t mode)
 {
     if (mode == EXPR)
         fprintf (expr->log_file, "<FONT SIZE=\"6\"><center>My Differentiator: expression</center><FONT SIZE=\"5\">\n\n");
@@ -30,7 +30,7 @@ void DifferentiatorGraphviz (tree_t* expr, mode_graph_t mode)
     fprintf (expr->log_file, "<center><img src = %s.png ></center>\n\n", namepng);
 }
 
-void MakeDotFileGraphviz (tree_t* expr, mode_graph_t mode)
+void MakeDotFileGraphviz (tree_t* expr, my_mode_t mode)
 {
     FILE* dot_file = fopen ("Expression.dot", "wt");
     VerifyOpenFile (dot_file, "MakeDotFileGraphviz");
@@ -96,7 +96,7 @@ void PrintNodeDot (FILE* dot_file, node_t* node)
 
 //-----------------------------------------------DUMP-------------------------------------------------------------
 
-void DiffDump (tree_t* tree, mode_graph_t mode)
+void DiffDump (tree_t* tree, my_mode_t mode)
 {
     fprintf (tree->log_file, "<FONT SIZE=\"6\"><center>Dump Differentiator!:</center><FONT SIZE=\"5\">\n\n");
 
@@ -121,7 +121,7 @@ void DiffDump (tree_t* tree, mode_graph_t mode)
     //fprintf (tree->log_file, "<center><img src = DiffDump.png ></center>\n\n");
 }
 
-void MakeDotFileDump (tree_t* tree, mode_graph_t mode)
+void MakeDotFileDump (tree_t* tree, my_mode_t mode)
 {
     FILE* dot_file = fopen ("DiffDump.dot", "wt");
 

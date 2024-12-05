@@ -13,7 +13,7 @@
         ERROR_EVALUATE = -52,
     };
 
-    enum mode_graph_t
+    enum my_mode_t
     {
         EXPR,
         DIFF,
@@ -75,7 +75,9 @@
 
     node_t*     Copy                        (node_t* old_node);
 
-    void        WriterTexExpression         (tree_t* expr);
+    void        WriteExprAndDifferential    (tree_t* expr, node_t* node_expr, node_t* node_diff);
+
+    void        WriteTexExpression         (tree_t* expr, node_t* node, my_mode_t mode);
 
     void        RecursiveWriteExpression    (tree_t* expr, node_t* node);
 
@@ -87,7 +89,7 @@
 
     double      Evaluate                    (node_t* node);
 
-    double Exponent (double num, int degree);
+    double      Exponent                    (double num, int degree);
 
 //------------------------------------------------------------------------------------------------------------
 
