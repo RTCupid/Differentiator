@@ -48,9 +48,10 @@ errExpr_t ExpressionCtor (tree_t* expr)
 
     fprintf (expr->tex_file, "№9(1) Вычислить:");
     WriteTexExpression (expr, expr->root, EXPR);
+    fprintf (expr->tex_file, "\\]\n");
     fprintf (expr->tex_file, "\n\n");
 
-    fprintf (expr->tex_file, "Решение:\n");
+    fprintf (expr->tex_file, "Решение:\n\n");
 
     return EXPR_OK;
 }
@@ -62,13 +63,19 @@ node_t* Differentiator (tree_t* expr, node_t* node)
     if (node->type == NUM || !IsNotConstExpression (expr, node))
     {
         node_t* node_diff = _NUM(0);
+
+        fprintf (expr->tex_file, "Пока примем без доказательства, что:\n");
         WriteExprAndDifferential (expr, node, node_diff);
+
         return node_diff;
     }
     if (node->type == VAR)
     {
         node_t* node_diff = _NUM(1);
+
+        fprintf (expr->tex_file, "Очевидно,\n");
         WriteExprAndDifferential (expr, node, node_diff);
+
         return node_diff;
     }
     if (node->type == OP)
@@ -78,7 +85,10 @@ node_t* Differentiator (tree_t* expr, node_t* node)
             node_t* node_diff = _ADD(
                                     Differentiator (expr, node->left),
                                     Differentiator (expr, node->right));
+
+            fprintf (expr->tex_file, "На уроке рисования вам докажут, что:\n");
             WriteExprAndDifferential (expr, node, node_diff);
+
             return node_diff;
         }
         if (node->value == SUB)
@@ -86,7 +96,10 @@ node_t* Differentiator (tree_t* expr, node_t* node)
             node_t* node_diff = _SUB(
                                     Differentiator (expr, node->left),
                                     Differentiator (expr, node->right));
+
+            fprintf (expr->tex_file, "По основной теореме дифференцирования:\n");
             WriteExprAndDifferential (expr, node, node_diff);
+
             return node_diff;
         }
         if (node->value == MUL)
@@ -98,7 +111,10 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                     _MUL(
                                         Copy (node->left),
                                         Differentiator (expr, node->right)));
+
+            fprintf (expr->tex_file, "Заметим, что:\n");
             WriteExprAndDifferential (expr, node, node_diff);
+
             return node_diff;
         }
         if (node->value == DIV)
@@ -114,7 +130,10 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                     _DEG(
                                         Copy (node->right),
                                         _NUM(2)));
+
+            fprintf (expr->tex_file, "Продифференцируем простую функцию и получим:\n");
             WriteExprAndDifferential (expr, node, node_diff);
+
             return node_diff;
         }
         if (node->value == SIN)
@@ -123,7 +142,10 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                     _COS(
                                         Copy (node->left)),
                                     Differentiator (expr, node->left));
+
+            fprintf (expr->tex_file, "Ещё более очевидно\n");
             WriteExprAndDifferential (expr, node, node_diff);
+
             return node_diff;
         }
         if (node->value == COS)
@@ -132,7 +154,10 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                     _SIN(
                                         Copy (node->left)),
                                     Differentiator (expr, node->left));
+
+            fprintf (expr->tex_file, "Перейдя в комплексное поле и обратно, получим\n");
             WriteExprAndDifferential (expr, node, node_diff);
+
             return node_diff;
         }
         if (node->value == LN)
@@ -142,7 +167,10 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                         _NUM(1),
                                         Copy (node->left)),
                                     Differentiator (expr, node->left));
+
+            fprintf (expr->tex_file, "По табличке из задачника Кудрявцева находим\n");
             WriteExprAndDifferential (expr, node, node_diff);
+
             return node_diff;
         }
         if (node->value == DEG)
@@ -158,7 +186,9 @@ node_t* Differentiator (tree_t* expr, node_t* node)
 
             ClearTree (node_degree);
 
+            fprintf (expr->tex_file, "После простых преобразований:\n");
             WriteExprAndDifferential (expr, node, node_diff);
+
             return node_diff;
         }
     }
@@ -425,8 +455,8 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
     }
     else if (node->type == NUM)
     {
-        fprintf (expr->tex_file, "\\left(%f\\right)", node->value);
-        fprintf (expr->dbg_log_file, "(%f)", node->value);
+        fprintf (expr->tex_file, "\\left(%g\\right)", node->value);
+        fprintf (expr->dbg_log_file, "(%g)", node->value);
         return;
     }
     else if (node->type == VAR)
