@@ -8,6 +8,7 @@
 #include "DiffVerificator.h"
 #include "ReadExpression.h"
 #include "DSL.h"
+#include "colors.h"
 
 static double GLOBALX = 0;
 
@@ -138,6 +139,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
         }
         if (node->value == SIN)
         {
+            printf (RED "function is sin\n" RESET);
             node_t* node_diff = _MUL(
                                     _COS(
                                         Copy (node->left)),
@@ -319,7 +321,7 @@ node_t* SimplifyConstExpr (tree_t* expr, node_t* node, int* n_change_elems)
 
 bool IsNotConstExpression (tree_t* expr, node_t* crnt_node)
 {
-    if (!crnt_node->left || !crnt_node->right)
+    if (!crnt_node->left && !crnt_node->right)
     {
         if (crnt_node->value == 'x')
             return true;
