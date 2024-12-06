@@ -170,7 +170,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                         Copy (node->left)),
                                     Differentiator (expr, node->left));
 
-            fprintf (expr->tex_file, "По табличке из задачника Кудрявцева находим\n");
+            fprintf (expr->tex_file, "В курсе аналитической геометрии вам доказывали, что:\n");
             WriteExprAndDifferential (expr, node, node_diff);
 
             return node_diff;
