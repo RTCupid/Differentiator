@@ -346,10 +346,13 @@ void WriteExprAndDifferential (tree_t* expr, node_t* node_expr, node_t* node_dif
     /*---Expression---*/
     WriteTexExpression (expr, node_expr, EXPR);
 
-    fprintf (expr->tex_file, "\t= ");
+    //fprintf (expr->tex_file, "\t=\\]\n ");
 
     /*---Differential---*/
+
+    //fprintf (expr->tex_file, "\t\\[ ");
     WriteTexExpression (expr, node_diff, DIFF);
+    //fprintf (expr->tex_file, "\\] ");
 }
 
 void WriteTexExpression (tree_t* expr, node_t* node, my_mode_t mode)
@@ -357,18 +360,20 @@ void WriteTexExpression (tree_t* expr, node_t* node, my_mode_t mode)
     if (mode == EXPR)
     {
         //Expression
-        fprintf (expr->tex_file, "\t\\[\\left(");
+        fprintf (expr->tex_file, "\t$\\left(");
 
         RecursiveWriteExpression (expr, node);
 
-        fprintf (expr->tex_file, "\\right)'\n");
+        fprintf (expr->tex_file, "\\right)'$\n");
     }
     else if (mode == DIFF)
     {
         //Differential
+        fprintf (expr->tex_file, "\t$\\left(");
+
         RecursiveWriteExpression (expr, node);
 
-        fprintf (expr->tex_file, "\\]\n");
+        fprintf (expr->tex_file, "$\n");
     }
 }
 
@@ -470,8 +475,8 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
     }
     else if (node->type == NUM)
     {
-        fprintf (expr->tex_file, "\\left(%g\\right)", node->value);
-        fprintf (expr->dbg_log_file, "(%g)", node->value);
+        fprintf (expr->tex_file, "\\%g\\", node->value);
+        fprintf (expr->dbg_log_file, "%g", node->value);
         return;
     }
     else if (node->type == VAR)
