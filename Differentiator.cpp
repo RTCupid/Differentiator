@@ -417,7 +417,9 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
 
             /*...left...*/
             fprintf (expr->tex_file, "{");
+            fprintf (expr->tex_file, "(");
             RecursiveWriteExpression (expr, node->left);
+            fprintf (expr->tex_file, ")");
             fprintf (expr->tex_file, "}");
         }
         else if (node->value == COS)
@@ -427,13 +429,15 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
 
             /*...left...*/
             fprintf (expr->tex_file, "{");
+            fprintf (expr->tex_file, "(");
             RecursiveWriteExpression (expr, node->left);
+            fprintf (expr->tex_file, ")");
             fprintf (expr->tex_file, "}");
         }
         else if (node->value == DEG)
         {
             /*...left...*/
-            fprintf (expr->tex_file, "(");
+            //fprintf (expr->tex_file, "(");
             RecursiveWriteExpression (expr, node->left);
 
             fprintf (expr->tex_file, "%c", (int)node->value);
@@ -443,7 +447,7 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
             fprintf (expr->tex_file, "{");
             RecursiveWriteExpression (expr, node->right);
             fprintf (expr->tex_file, "}");
-            fprintf (expr->tex_file, ")");
+            //fprintf (expr->tex_file, ")");
         }
         else if (node->value == LN)
         {
@@ -458,7 +462,7 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
         else if (node->value == MUL)
         {
             /*...left...*/
-            fprintf (expr->tex_file, "(");
+            //fprintf (expr->tex_file, "(");
             RecursiveWriteExpression (expr, node->left);
 
             fprintf (expr->tex_file, "{\\cdot}");
@@ -466,7 +470,7 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
 
             /*...right...*/
             RecursiveWriteExpression (expr, node->right);
-            fprintf (expr->tex_file, ")");
+            //fprintf (expr->tex_file, ")");
         }
         else
         {

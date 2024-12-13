@@ -17,7 +17,7 @@ digraph G {
 	 node0x503000001300:<left> -> node0x5030000012d0 [style=bold; weight=1000; ];
 	 node0x503000001300:<right> -> node0x5030000012a0 [style=bold; weight=1000; ];
 	 node0x5030000012d0 [shape=Mrecord; style=filled; color="#4a536b"; label =  "{node: 0x5030000012d0 | value: x | type: VAR | {<left>left: (nil) | <right>right: (nil)}  }" ];
-	 node0x5030000012a0 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x5030000012a0 | value: 2.000000 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
+	 node0x5030000012a0 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x5030000012a0 | value: 3.000000 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
 	 node0x503000001150 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "{node: 0x503000001150 | value: * | type: OP | {<left>left: 0x503000001120 | <right>right: 0x5030000010f0}  }" ];
 	 node0x503000001150:<left> -> node0x503000001120 [style=bold; weight=1000; ];
 	 node0x503000001150:<right> -> node0x5030000010f0 [style=bold; weight=1000; ];
@@ -29,7 +29,7 @@ digraph G {
 	 node0x5030000010c0:<left> -> node0x503000001090 [style=bold; weight=1000; ];
 	 node0x5030000010c0:<right> -> node0x503000001060 [style=bold; weight=1000; ];
 	 node0x503000001090 [shape=Mrecord; style=filled; color="#4a536b"; label =  "{node: 0x503000001090 | value: x | type: VAR | {<left>left: (nil) | <right>right: (nil)}  }" ];
-	 node0x503000001060 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x503000001060 | value: 2.000000 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
+	 node0x503000001060 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x503000001060 | value: 3.000000 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
 	 node0x503000001000 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "{node: 0x503000001000 | value: * | type: OP | {<left>left: 0x503000000fa0 | <right>right: 0x503000000ee0}  }" ];
 	 node0x503000001000:<left> -> node0x503000000fa0 [style=bold; weight=1000; ];
 	 node0x503000001000:<right> -> node0x503000000ee0 [style=bold; weight=1000; ];
@@ -38,7 +38,7 @@ digraph G {
 	 node0x503000000fa0:<right> -> node0x503000000f40 [style=bold; weight=1000; ];
 	 node0x503000000f70 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x503000000f70 | value: 1.000000 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
 	 node0x503000000f40 [shape=Mrecord; style=filled; color="#4a536b"; label =  "{node: 0x503000000f40 | value: x | type: VAR | {<left>left: (nil) | <right>right: (nil)}  }" ];
-	 node0x503000000ee0 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x503000000ee0 | value: 2.000000 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
+	 node0x503000000ee0 [shape=Mrecord; style=filled; color="#ff9a8d"; label =  "{node: 0x503000000ee0 | value: 3.000000 | type: NUM | {<left>left: (nil) | <right>right: (nil)}  }" ];
 	 node0x503000000d30 [shape=Mrecord; style=filled; color="#aed6dc"; label =  "{node: 0x503000000d30 | value: * | type: OP | {<left>left: 0x503000000d00 | <right>right: 0x503000000b50}  }" ];
 	 node0x503000000d30:<left> -> node0x503000000d00 [style=bold; weight=1000; ];
 	 node0x503000000d30:<right> -> node0x503000000b50 [style=bold; weight=1000; ];
