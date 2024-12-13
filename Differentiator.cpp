@@ -35,22 +35,22 @@ errExpr_t ExpressionCtor (tree_t* expr)
                              "\\usepackage[T2A]{fontenc}\n"
                              "\\usepackage[utf8]{inputenc}\n"
                              "\\usepackage{geometry}\n\n");
-
     fprintf (expr->tex_file, "\\geometry{top=4ex}\n"
                              "\\geometry{bottom=4ex}\n"
-                             "\\geometry{left=5em}\n"
-                             "\\geometry{right=5em}\n\n");
+                             "\\geometry{left=1em}\n"
+                             "\\geometry{right=1em}\n\n");
 
-    fprintf (expr->tex_file, "\\author{Муратов Артём}\n");
-    fprintf (expr->tex_file, "\\date{3Б класс}\n");
-    fprintf (expr->tex_file, "\\title{Домашняя работа}\n");
+    fprintf (expr->tex_file, "\\begin{document}\n");
+    fprintf (expr->tex_file, "\t\\author{Муратов Артём}\n");
+    fprintf (expr->tex_file, "\t\\date{3Б класс}\n");
+    fprintf (expr->tex_file, "\t\\title{Домашняя работа}\n");
 
-    fprintf (expr->tex_file, "\\maketitle\n\n");
+    fprintf (expr->tex_file, "\t\\maketitle\n\n");
+    fprintf (expr->tex_file, "\t\\footnotesize\n\n");
 
-    fprintf (expr->tex_file, "№9(1) Вычислить:");
+    fprintf (expr->tex_file, "\t№9(1) Вычислить:");
     WriteTexExpression (expr, expr->root, EXPR);
-    fprintf (expr->tex_file, "\\]\n");
-    fprintf (expr->tex_file, "\n\n");
+    fprintf (expr->tex_file, "\n");
 
     fprintf (expr->tex_file, "Решение:\n\n");
 
@@ -66,7 +66,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
         node_t* node_diff = _NUM(0);
 
         fprintf (expr->tex_file, "Пока примем без доказательства, что:\n");
-        WriteExprAndDifferential (expr, node, node_diff);
+        WriteExprAndDifferential (expr, node, node_diff, EVAL);
 
         return node_diff;
     }
@@ -75,7 +75,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
         node_t* node_diff = _NUM(1);
 
         fprintf (expr->tex_file, "Очевидно,\n");
-        WriteExprAndDifferential (expr, node, node_diff);
+        WriteExprAndDifferential (expr, node, node_diff, EVAL);
 
         return node_diff;
     }
@@ -88,7 +88,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                     Differentiator (expr, node->right));
 
             fprintf (expr->tex_file, "На уроке рисования вам докажут, что:\n");
-            WriteExprAndDifferential (expr, node, node_diff);
+            WriteExprAndDifferential (expr, node, node_diff, EVAL);
 
             return node_diff;
         }
@@ -99,7 +99,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                     Differentiator (expr, node->right));
 
             fprintf (expr->tex_file, "По основной теореме дифференцирования:\n");
-            WriteExprAndDifferential (expr, node, node_diff);
+            WriteExprAndDifferential (expr, node, node_diff, EVAL);
 
             return node_diff;
         }
@@ -114,7 +114,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                         Differentiator (expr, node->right)));
 
             fprintf (expr->tex_file, "Заметим, что:\n");
-            WriteExprAndDifferential (expr, node, node_diff);
+            WriteExprAndDifferential (expr, node, node_diff, EVAL);
 
             return node_diff;
         }
@@ -133,7 +133,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                         _NUM(2)));
 
             fprintf (expr->tex_file, "Продифференцируем простую функцию и получим:\n");
-            WriteExprAndDifferential (expr, node, node_diff);
+            WriteExprAndDifferential (expr, node, node_diff, EVAL);
 
             return node_diff;
         }
@@ -146,7 +146,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                     Differentiator (expr, node->left));
 
             fprintf (expr->tex_file, "Ещё более очевидно\n");
-            WriteExprAndDifferential (expr, node, node_diff);
+            WriteExprAndDifferential (expr, node, node_diff, EVAL);
 
             return node_diff;
         }
@@ -158,7 +158,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                     Differentiator (expr, node->left));
 
             fprintf (expr->tex_file, "Перейдя в комплексное поле и обратно, получим\n");
-            WriteExprAndDifferential (expr, node, node_diff);
+            WriteExprAndDifferential (expr, node, node_diff, EVAL);
 
             return node_diff;
         }
@@ -171,7 +171,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
                                     Differentiator (expr, node->left));
 
             fprintf (expr->tex_file, "В курсе аналитической геометрии вам доказывали, что:\n");
-            WriteExprAndDifferential (expr, node, node_diff);
+            WriteExprAndDifferential (expr, node, node_diff, EVAL);
 
             return node_diff;
         }
@@ -189,7 +189,7 @@ node_t* Differentiator (tree_t* expr, node_t* node)
             ClearTree (node_degree);
 
             fprintf (expr->tex_file, "После простых преобразований:\n");
-            WriteExprAndDifferential (expr, node, node_diff);
+            WriteExprAndDifferential (expr, node, node_diff, EVAL);
 
             return node_diff;
         }
@@ -341,18 +341,35 @@ bool IsNotConstExpression (tree_t* expr, node_t* crnt_node)
     return false;
 }
 
-void WriteExprAndDifferential (tree_t* expr, node_t* node_expr, node_t* node_diff)
+void WriteExprAndDifferential (tree_t* expr, node_t* node_expr, node_t* node_diff, my_mode2_t mode)
 {
-    /*---Expression---*/
-    WriteTexExpression (expr, node_expr, EXPR);
+    if (mode == EVAL)
+    {
+        /*---Expression---*/
+        fprintf (expr->tex_file, "\t\\[\\left(");
+        WriteTexExpression (expr, node_expr, EXPR);
+        fprintf (expr->tex_file, "\\right)'");
 
-    //fprintf (expr->tex_file, "\t=\\]\n ");
+        fprintf (expr->tex_file, " = ");
 
-    /*---Differential---*/
+        /*---Differential---*/
+        WriteTexExpression (expr, node_diff, DIFF);
+        fprintf (expr->tex_file, "\\]\n\n");
+    }
+    if (mode == ANSW)
+    {
+        /*---Expression---*/
+        fprintf (expr->tex_file, "\t\\[\\left(");
+        WriteTexExpression (expr, node_expr, EXPR);
+        fprintf (expr->tex_file, "\\right)' =\\]");
 
-    //fprintf (expr->tex_file, "\t\\[ ");
-    WriteTexExpression (expr, node_diff, DIFF);
-    //fprintf (expr->tex_file, "\\] ");
+        //fprintf (expr->tex_file, " = \n ");
+
+        /*---Differential---*/
+        fprintf (expr->tex_file, "\t\\[= ");
+        WriteTexExpression (expr, node_diff, DIFF);
+        fprintf (expr->tex_file, "\\]\n\n");
+    }
 }
 
 void WriteTexExpression (tree_t* expr, node_t* node, my_mode_t mode)
@@ -360,20 +377,12 @@ void WriteTexExpression (tree_t* expr, node_t* node, my_mode_t mode)
     if (mode == EXPR)
     {
         //Expression
-        fprintf (expr->tex_file, "\t$\\left(");
-
         RecursiveWriteExpression (expr, node);
-
-        fprintf (expr->tex_file, "\\right)'$\n");
     }
     else if (mode == DIFF)
     {
         //Differential
-        fprintf (expr->tex_file, "\t$\\left(");
-
         RecursiveWriteExpression (expr, node);
-
-        fprintf (expr->tex_file, "$\n");
     }
 }
 
@@ -403,8 +412,8 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
         }
         else if (node->value == SIN)
         {
-            fprintf (expr->tex_file, "sin");
-            fprintf (expr->dbg_log_file, "sin");
+            fprintf (expr->tex_file, "\\sin");
+            fprintf (expr->dbg_log_file, "\\sin");
 
             /*...left...*/
             fprintf (expr->tex_file, "{");
@@ -413,8 +422,8 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
         }
         else if (node->value == COS)
         {
-            fprintf (expr->tex_file, "cos");
-            fprintf (expr->dbg_log_file, "cos");
+            fprintf (expr->tex_file, "\\cos");
+            fprintf (expr->dbg_log_file, "\\cos");
 
             /*...left...*/
             fprintf (expr->tex_file, "{");
@@ -475,7 +484,7 @@ void RecursiveWriteExpression (tree_t* expr, node_t* node)
     }
     else if (node->type == NUM)
     {
-        fprintf (expr->tex_file, "\\%g\\", node->value);
+        fprintf (expr->tex_file, "{%g}", node->value);
         fprintf (expr->dbg_log_file, "%g", node->value);
         return;
     }

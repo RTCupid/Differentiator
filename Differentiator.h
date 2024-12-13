@@ -13,6 +13,12 @@
         ERROR_EVALUATE = -52,
     };
 
+    enum my_mode2_t
+    {
+        EVAL,
+        ANSW,
+    };
+
     enum my_mode_t
     {
         EXPR,
@@ -75,7 +81,7 @@
 
     node_t*     Copy                        (node_t* old_node);
 
-    void        WriteExprAndDifferential    (tree_t* expr, node_t* node_expr, node_t* node_diff);
+    void        WriteExprAndDifferential    (tree_t* expr, node_t* node_expr, node_t* node_diff, my_mode2_t mode);
 
     void        WriteTexExpression         (tree_t* expr, node_t* node, my_mode_t mode);
 

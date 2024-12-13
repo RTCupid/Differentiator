@@ -45,7 +45,7 @@ int main ()
     DiffDump (&expr, DIFF);
 
     fprintf (expr.tex_file, "Упростив выражение получаем ответ:\n");
-    WriteExprAndDifferential (&expr, expr.root, expr.diff);
+    WriteExprAndDifferential (&expr, expr.root, expr.diff, ANSW);
 
     ExpressionDtor (&expr);
     printf ("End Programm\n");
